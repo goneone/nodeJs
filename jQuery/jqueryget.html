@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>jqueryget</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <h1>제목입니다</h1>
+  <h1>안녕하십니까1</h1>
+  <h1>안녕하십니까2</h1>
+  <h1>안녕하십니까3</h1>
+  <h1>안녕하십니까4</h1>
+  <h1>안녕하십니까5</h1>
+
+  <script>
+    var jqueryObject = $('h1');
+    var Domelem = jqueryObject.get(4);
+    Domelem.style.backgroundColor = "yellow";
+  </script>
+</body>
+</html>

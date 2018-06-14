@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>jquerysrc</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <h1>제목입니다</h1>
+  <h1>안녕하십니까</h1>
+  <script>
+    var element = document.getElementsByTagName('h1');
+    //var element = document.getElementsByTagName('h1')[0];
+    //이렇게 하면 첫번째 h1만 선택함.
+    
+    $(element).css('background', 'pink');
+
+    //이 방법(링크방식)은 네트워크를 통해 라이브러리 파일을 받아야 하기 때문에 온라인 상태에서만 동작함*
+  </script>
+</body>
+</html>

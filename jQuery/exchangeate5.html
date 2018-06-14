@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>jquerysrc</title>
+  <script src ="dollar.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    var jq = jQuery.noConflict();
+    // $표시를 안겹치고 쓸수 있게해줌
+    //$('h1')했던거를 jq('h1') 이렇게 바꿔줌. 이유: dollar.js에서 $표시를 쓰니까 물론 실제로는 그냥 안겹치게 쓰는게 최고임.
+  </script>
+</head>
+<body>
+  <h1>달러 계산기</h1>
+  <hr />
+  <script>
+    $();
+    $(123);
+    jq('h1').css('background', 'yellow');
+  </script>
+</body>
+</html>
