@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <title>dynamicfunc</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <script>
+  //동적 속성 편집
+  //객체의 멤버는 실행중에도 얼마든지 추가 및 삭제가 가능함 !
+    var human = {
+      age : 29,
+      name : "musasi",
+    };
+
+    human.salary = 520;
+    delete human.age;
+    human.sex = "남자";
+    human.job = "학생";
+
+    document.write(human.name + "의 월급 " + human.salary + "<br>");
+    document.write(human.name + "의 나이 " + human.age + "<br>");
+  </script>
+</body>
+</html>

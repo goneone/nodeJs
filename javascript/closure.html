@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>closure</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <script>
+    function outer() {
+      var value = 1234;
+      function inner() {
+        document.write("value = " + value + "<br>");
+      }
+      inner();
+    }
+    outer();
+  </script>
+</body>
+</html>

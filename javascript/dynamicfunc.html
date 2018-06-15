@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <title>dynamicfunc</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <script>
+  //동적 함수
+  //선언적 함수나 익명함수나 function 키워드로 만드는 함수는 모두 코드 작성 시점에 본체의 내용이 확정되는 정적함수임.
+  //그래서 페이지가 로드될 때 딱 한번만 해석해 두고 호출할 때마다 재사용 된다.
+  //이에 비해 동적 함수는 문서를 작성할 때가 아닌 실행중에 생성된다.
+    var add= new Function("a", "b", "return a+b;");
+    document.write("2+ 3 = " + add(2,3) +"<br>");
+  </script>
+</body>
+</html>

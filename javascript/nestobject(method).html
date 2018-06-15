@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <title>dynamicfunc</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <script>
+  //***객체에 포함된 함수를 특별히 메서드라고 한다. 함수가아닌 일반 데이터 멤버는 속성(property)이라고 한다.
+  //그래서 객체는 속성과 메서드로 구성된다!*
+    var human = {
+      name : "김상형",
+      age : 25,
+      intro : function() {
+    document.write("name = " + this.name + "<br>");
+    document.write("age = " + this.age + "<br>");
+    //this가 빠지면 전역변수를 참조하므로 자바스크립트에서 this는 필수다
+  }
+};
+    human.intro();
+  </script>
+</body>
+</html>
