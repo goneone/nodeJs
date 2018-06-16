@@ -1,8 +1,8 @@
   var http = require('http');
   var fs = require('fs');
   var url = require('url');
-
-  function templateHTML(title, list, body) {
+  var qs = require('querystring');
+  function templateHTML(title, list, body, control) {
     return `
         <!doctype html>
         <html>
@@ -13,6 +13,7 @@
         <body>
           <h1><a href="/">WEB</a></h1>
           ${list}
+          ${control}
           ${body}
         </body>
         </html>
@@ -37,30 +38,109 @@
       var queryData = url.parse(_url, true).query; //url을 분석하는 코드.
       var pathname = url.parse(_url, true).pathname;
       if(pathname === '/') {
+        //홈을 처리하는 부분
         if(queryData.id === undefined) {
           fs.readdir('./data', function(error, filelist){
             var title = 'Welcome';
             var description = 'Hello, Node.js'
             var list = templateList(filelist);
-            var template = templateHTML(title, list, `<h2>${title}</h2>${description}`);
+            var template = templateHTML(title, list,
+              `<h2>${title}</h2>${description}`,
+              `<a href="/create">create</a>`
+            );
             response.writeHead(200);
             response.end(template);
           })
         } else {
+          //id 값을 선택한 페이지
           fs.readdir('./data', function(error, filelist){
             fs.readFile(`data/${queryData.id}`, 'utf8', function(err,description){
             var list = templateList(filelist);
             var title =  queryData.id;
-            var template =templateHTML(title, list, `<h2>${title}</h2>${description}`);
+            var template =templateHTML(title, list,
+              `<h2>${title}</h2>${description}`,
+              `<a href="/create">create</a> <a href="/update?id=${title}">update</a>`
+            );
             response.writeHead(200);
             response.end(template);
           });
         });
+      }
+     } else if(pathname === '/create') {
+        fs.readdir('./data', function(error, filelist){
+           var title = 'WEB - crate';
+           var list = templateList(filelist);
+           //template에서 3번째 인자인 form에대한 설명은 form.html을 참조
+           var template = templateHTML(title, list, `
+             <form action="/create_process"
+             method="post">
+               <p><input type="text" name="title" placeholder="이름을 입력하세요"></p>
+               <p>
+                 <textarea name = "description" placeholder="설명을 적어주세요"></textarea>
+               </p>
+               <p>
+                 <input type = "submit">
+               </p>
+             </form>
+             `, '');
+           response.writeHead(200);
+           response.end(template);
+         });
+     } else if(pathname === '/create_process'){
+       var body = '';
+       request.on('data', function(data){
+        //웹브라우저가 post방식으로 데이터를 전송할때 데이터가 엄청나게 많으면 한번에 처리하다가는
+        //프로그램에 무리가 갈수 있음. 그래서 nodejs에서는 post방식으로 전송되는 데이터가 많을 경우.
+        //이러한 방법을 씀. 서버쪽에서 수신할때마다 콜백함수를 호출하고 data라는 인자를 통해서 수신한 정보를 주기로
+        //약속되어 있음.
+          body = body + data;
+        //body에다가 callback이 실행될때마다 data를 추가함.
+      });
+       request.on('end', function(){
+        //그렇게 정보가 조각조각 들어오다가 더이상 들어올 데이터가 없으면 end 다음에 들어오는 callback함수를 호출하도록 약속
+        //되어 있음.
+          var post = qs.parse(body);
+          var title = post.title;
+          var description = post.description;
+          fs.writeFile(`data/${title}`, description, 'utf8', function(err){
+            response.writeHead(302, {Location: `/?id=${title}`});
+            //200은 성공 302는 다른페이지로 리다이렉션시키라는 뜻
+            response.end();
+        })
+      });
+    } else if (pathname === '/update') {
+      fs.readdir('./data', function(error, filelist){
+        fs.readFile(`data/${queryData.id}`, 'utf8', function(err,description){
+        var list = templateList(filelist);
+        var title =  queryData.id;
+        var template =templateHTML(title, list,
+          `
+            <form action="/update_process" method="post">
+              <input type="hidden" name="id" value="${title}">
+              //사용자가 수정할떄 어떤 파일을 수정할지를 알수 있어야함.
+              //만약 사용자가 제목을 수정해버리면 호날두형님이라는 data에 들어있는 파일들을
+              //제목을 메시형님이라고 수정해버리면 서버에서 찾을수 없게 되기 때문에.
+              //미리 저렇게 안보이게 제목값을 받아놓는거임
+              <p><input type="text" name="title" placeholder="이름을 입력하세요"
+              value="${title}""></p>
+              <p>
+                <textarea name = "description" placeholder="설명을 적어주세요">${description}</textarea>
+              </p>
+              <p>
+                <input type = "submit">
+              </p>
+            </form>
+          `,
+          `<a href="/create">create</a> <a href="/update?id=${title}">update</a>`
+        );
+        response.writeHead(200);
+        response.end(template);
+      });
+    });
+    } else {
+        response.writeHead(404); //파일을 찾을수없다는 에러
+        response.end('not found'); //여기다가 글자 써봐 바로바로 화면에 바로바로바뀜.
      }
-    }else {
-      response.writeHead(404); //파일을 찾을수없다는 에러
-      response.end('not found'); //여기다가 글자 써봐 바로바로 화면에 바로바로바뀜.
-    }
 
 
   });
