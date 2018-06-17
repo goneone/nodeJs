@@ -3,9 +3,11 @@ var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
 var template = require('./lib/template.js'); //요건 내가 만든 모듈
-
+var path = require('path'); // 보안상의 문제때문에 데이터가 들어오고 나가는 모든경로의 path를 바꿔줘야함.(원래의경로를 숨겨 준다고 보면 됨)
 //http:localhost/?id=html 에서 id=html부분을 query String이라고 한다.
 //이 쿼리스트링의 값에 따라서 다른 컨텐츠를 보여주는 웹페이지를 만들어 보자
+var sanitizeHtml = require('sanitize-html');//보안문제떄문에 받은 npm..Json방식으로 바꿔주는 것 같음
+
 var app = http.createServer(function(request,response){
     var _url = request.url;
     var queryData = url.parse(_url, true).query; //url을 분석하는 코드.
@@ -30,15 +32,21 @@ var app = http.createServer(function(request,response){
         //id 값을 선택한 페이지
         //누구를 수정할껀지에 대한 정보를 쿼리스트링을 통해서 전달한다
         fs.readdir('./data', function(error, filelist){
-          fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description){
+          var filteredId = path.parse(queryData.id).base;
+          fs.readFile(`data/${filteredId}`, 'utf8', function(err, description){
             var title = queryData.id;
+            var sanitizedTitle = sanitizeHtml(title);
+            var sanitizedDescription = sanitizeHtml(description, {
+              allowedTags:['h1']
+            });
+            //sanitized = 살균하다는 뜻 ㅋㅋ
             var list = template.list(filelist);
             var html = template.HTML(title, list,
-             `<h2>${title}</h2>${description}`,
+             `<h2>${sanitizedTitle}</h2>${sanitizedDescription}`,
               `<a href="/create">create</a>
-               <a href="/update?id=${title}">update</a>
+               <a href="/update?id=${sanitizedTitle}">update</a>
                <form action="delete_process" method="post">
-                <input type="hidden" name="id" value="${title}">
+                <input type="hidden" name="id" value="${sanitizedTitle}">
                 <input type="submit" value="delete">
                </form>
                `
@@ -100,7 +108,8 @@ var app = http.createServer(function(request,response){
 
     } else if(pathname === '/update'){
       fs.readdir('./data', function(error, filelist){
-        fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description){
+        var filteredId = path.parse(queryData.id).base;
+        fs.readFile(`data/${filteredId}`, 'utf8', function(err, description){
           var title = queryData.id;
           var list = template.list(filelist);
           var html = template.HTML(title, list,
@@ -155,7 +164,8 @@ var app = http.createServer(function(request,response){
       request.on('end', function(){
           var post = qs.parse(body);
           var id = post.id;
-          fs.unlink(`data/${id}`, function(error){
+          var filteredId = path.parse(id).base;
+          fs.unlink(`data/${filteredId}`, function(error){
             response.writeHead(302, {Location: `/`});
             response.end();
           })

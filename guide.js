@@ -26,3 +26,5 @@ syntax/template.js 참고.
 그러면 main.js에서 맨위에 var fs = require('fs'); 이건 뭘까?
 fs 모듈은 filesystem의 약자로 파일 처리와 관련된 모듈이다.
 이 모듈에는 메소드가 굉장히 많으니 직접 살펴보세요~! ex) fs.open()
+
+API(Application Programming Interface)
