@@ -2,34 +2,7 @@ var http = require('http');
 var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
-
-function templateHTML(title, list, body, control){
-  return `
-  <!doctype html>
-  <html>
-  <head>
-    <title>WEB1 - ${title}</title>
-    <meta charset="utf-8">
-  </head>
-  <body>
-    <h1><a href="/">WEB</a></h1>
-    ${list}
-    ${control}
-    ${body}
-  </body>
-  </html>
-  `;
-}
-function templateList(filelist){
-  var list = '<ul>';
-  var i = 0;
-  while(i < filelist.length){
-    list = list + `<li><a href="/?id=${filelist[i]}">${filelist[i]}</a></li>`;
-    i = i + 1;
-  }
-  list = list+'</ul>';
-  return list;
-}
+var template = require('./lib/template.js'); //요건 내가 만든 모듈
 
 //http:localhost/?id=html 에서 id=html부분을 query String이라고 한다.
 //이 쿼리스트링의 값에 따라서 다른 컨텐츠를 보여주는 웹페이지를 만들어 보자
@@ -40,25 +13,28 @@ var app = http.createServer(function(request,response){
     if(pathname === '/'){
       if(queryData.id === undefined){
         //홈을 처리하는 부분
+        //디렉토리에 있는 아이템(파일,디렉토리 등)의 이름들을 리턴해준다.
         fs.readdir('./data', function(error, filelist){
-          var title = 'Welcome';
-          var description = 'Hello, Node.js';
-          var list = templateList(filelist);
-          var template = templateHTML(title, list,
+          var title = '환영합니다';
+          var description = '당신을 환영합니다';
+          var list = template.list(filelist);
+          var html = template.HTML(title, list,
             `<h2>${title}</h2>${description}`,
+            // 눌렀을 때 /create로 이동
             `<a href="/create">create</a>`
           );
           response.writeHead(200);
-          response.end(template);
+          response.end(html);
         });
       } else {
         //id 값을 선택한 페이지
+        //누구를 수정할껀지에 대한 정보를 쿼리스트링을 통해서 전달한다
         fs.readdir('./data', function(error, filelist){
           fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description){
             var title = queryData.id;
-            var list = templateList(filelist);
-            var template = templateHTML(title, list,
-              `<h2>${title}</h2>${description}`,
+            var list = template.list(filelist);
+            var html = template.HTML(title, list,
+             `<h2>${title}</h2>${description}`,
               `<a href="/create">create</a>
                <a href="/update?id=${title}">update</a>
                <form action="delete_process" method="post">
@@ -68,16 +44,19 @@ var app = http.createServer(function(request,response){
                `
             );
             response.writeHead(200);
-            response.end(template);
+            response.end(html);
           });
         });
       }
     } else if(pathname === '/create'){
       fs.readdir('./data', function(error, filelist){
         var title = 'WEB - create';
-        var list = templateList(filelist);
+        var list = template.list(filelist);
         //template에서 3번째 인자인 form에대한 설명은 form.html을 참조
-        var template = templateHTML(title, list, `
+        //placeholder는 사용자가 뭘입력하는게 좋은지 가이드해주는 속성임.
+        //form 태그란? 사용자의 데이터를 서버에 전송하는 방법!
+        //form action="서버로 전송한 데이터를 수신할 url" method=":데이터를 전송하는 방법">
+        var html = template.HTML(title, list, `
           <form action="/create_process" method="post">
             <p><input type="text" name="title" placeholder="title"></p>
             <p>
@@ -89,7 +68,7 @@ var app = http.createServer(function(request,response){
           </form>
         `, '');
         response.writeHead(200);
-        response.end(template);
+        response.end(html);
       });
     } else if(pathname === '/create_process'){
       var body = '';
@@ -105,20 +84,26 @@ var app = http.createServer(function(request,response){
         //그렇게 정보가 조각조각 들어오다가 더이상 들어올 데이터가 없으면 end 다음에 들어오는 callback함수를 호출하도록 약속
         //되어 있음.
           var post = qs.parse(body);
+          //qs는 쿼리스트링이라는 nodejs가 갖고있는 모듈을 가져오는 것임. ()맨위에 선언했음)
+          //그 qs의 parse라는 함수에다가 body를 입력값으로 주면 post 데이터에 정보가 들어가게됨.
           var title = post.title;
           var description = post.description;
+          //fs.writefile은 파일(우리가 클라이언트로 부터 받은 데이터)을 저장하는 방법임
+          //writefile('해당파일', 파일에쓸내용, utf8, function(err))
           fs.writeFile(`data/${title}`, description, 'utf8', function(err){
             response.writeHead(302, {Location: `/?id=${title}`});
             //200은 성공 302는 다른페이지로 리다이렉션시키라는 뜻
+            //create를 한다음에 그 생성한 페이지로 이동하게끔 !
             response.end();
           })
       });
+
     } else if(pathname === '/update'){
       fs.readdir('./data', function(error, filelist){
         fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description){
           var title = queryData.id;
-          var list = templateList(filelist);
-          var template = templateHTML(title, list,
+          var list = template.list(filelist);
+          var html = template.HTML(title, list,
             `
             <form action="/update_process" method="post">
               <input type="hidden" name="id" value="${title}">
@@ -139,9 +124,10 @@ var app = http.createServer(function(request,response){
              <a href="/update?id=${title}">update</a>`
           );
           response.writeHead(200);
-          response.end(template);
+          response.end(html);
         });
       });
+      //post 방식으로 들어온 값을 받음.
     } else if(pathname === '/update_process'){
       var body = '';
       request.on('data', function(data){
@@ -152,7 +138,7 @@ var app = http.createServer(function(request,response){
           var id = post.id;
           var title = post.title;
           var description = post.description;
-          //예전파일 , 새로운파일, 콜백함수
+          //fs.rename(예전파일 , 새로운파일, 콜백함수)
           //누가 수정에서 파일이름과 내용을 바꾸면 그 파일이름, 내용이 바껴서 저장이 됨.
           fs.rename(`data/${id}`, `data/${title}`, function(error){
             fs.writeFile(`data/${title}`, description, 'utf8', function(err){
