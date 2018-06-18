@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <title>jsonobject</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <script>
+  //JSON은 자바스크립트의 객체 표기법으로서 원시값, 객체, 배열 등을 문자열 형태로 저장한다
+  //stringify 함수는 객체를 JSON 형태의 문자열로 변환하고 parse 함수는 문자열로 된 JSON을 객체로 역변환한다.
+    var human = {
+      name : "김상형",
+      age  : 29,
+    };
+
+    var jsonHuman = JSON.stringify(human);
+    document.write(jsonHuman + "</br />");
+
+    var human2 = JSON.parse(jsonHuman);
+    document.write("name : " + human2.name + "</br />");
+    document.write("age : " + human2.age + "</br />");
+  </script>
+</body>
+</html>
