@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>childenodes</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <p id="para">이것은 문단이다.</p>
+  <p id="para2">이것은 문단이다.</p>
+  <p id="para3">이것은 문단이다.</p>
+  <hr>
+  <script>
+    //1번 방법.
+    var para = document.getElementById("para");
+    var text = para.firstChild;
+    text.nodeValue = "gooooool";
+
+    //2번방법
+    var para2 = document.getElementById("para2");
+    para2.textContent = "letgo"
+
+    //3번방법
+    var para3 = document.getElementById("para3");
+    para3.innerText = "이방법도 통한다?22"
+
+  </script>
+</body>
+</html>
