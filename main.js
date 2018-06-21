@@ -23,7 +23,8 @@ var app = http.createServer(function(request,response){
           var html = template.HTML(title, list,
             `<h2>${title}</h2>${description}`,
             // 눌렀을 때 /create로 이동
-            `<a href="/create">create</a>`
+            `<a href="/create">create</a>
+            <a href="/crud">crud</a>`
           );
           response.writeHead(200);
           response.end(html);
@@ -170,6 +171,59 @@ var app = http.createServer(function(request,response){
             response.end();
           })
       });
+    } else if(pathname === '/crud'){
+      fs.readdir('./data', function(error, filelist){
+        var title = 'WEB - crud';
+        var list = template.list(filelist);
+        var html = template.HTML(title, list, `
+          <form action="/sendData_process" method="post">
+          <p><input type="text" name="title" placeholder="title"></p>
+          <p><input type="text" name="description" placeholder="description"></p>
+          <p><input type="text" name="author" placeholder="author"></p>
+          <p>
+            <input type = "submit">
+          </p>
+        `, '');
+        response.writeHead(200);
+        response.end(html);
+      });
+    } else if(pathname === '/crud_process'){
+      var body = '';
+      request.on('data', function(data){
+          body = body + data;
+        //body에다가 callback이 실행될때마다 data를 추가함.
+      });
+      request.on('end', function(){
+          var post = qs.parse(body);
+          //qs는 쿼리스트링이라는 nodejs가 갖고있는 모듈을 가져오는 것임. ()맨위에 선언했음)
+          //그 qs의 parse라는 함수에다가 body를 입력값으로 주면 post 데이터에 정보가 들어가게됨.
+          var title = post.title;
+          var description = post.description;
+          var author = post.author;
+
+          var mysql      = require('mysql');
+          var conn = mysql.createConnection({
+            host     : 'localhost',
+            user     : 'root',
+            password : '187f5391',
+            database : 'o2'
+          });
+
+          conn.connect();
+
+          var sql = 'INSERT INTO topic (title, description, author) VALUES(?, ?, ?)';
+          var params = [title,  description, author];
+          conn.query(sql, params, function(err, rows, fields){
+              if(err) {
+              console.log(err);
+            } else {
+              console.log(rows);
+            }
+          });
+
+      });
+      response.writeHead(200);
+      response.end(html);
     } else {
       response.writeHead(404);  //파일을 찾을수없다는 에러
       response.end('Not found'); //여기다가 글자 써봐 바로바로 화면에 바로바로바뀜.

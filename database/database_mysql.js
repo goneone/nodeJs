@@ -22,9 +22,33 @@ conn.query(sql, function(err, rows, fields) {
 });
 conn.end();*/
 
+/*
+var sql = 'INSERT INTO topic (title, description, author) VALUES(?, ?, ?)';
+var params = ['Supervisor', 'Watcher', 'graphittie'];
+conn.query(sql, params, function(err, rows, fields){
+    if(err) {
+    console.log(err);
+  } else {
+    console.log(rows);
+  }
+});
+*/
 
-var sql = 'INSERT INTO topic (title, description, author) VALUES("NodeJs", "Server side javascript", "egoing")';
-conn.query(sql, function(err, rows, fields){
+/*
+var sql = 'UPDATE topic SET title=?, description=?, author=? WHERE id=?';
+var params = ['NPM', 'Look at me','Watcher2', 1];
+conn.query(sql, params, function(err, rows, fields){
+    if(err) {
+    console.log(err);
+  } else {
+    console.log(rows);
+  }
+});
+*/
+
+var sql = 'DELETE FROM topic WHERE id=?';
+var params = [1];
+conn.query(sql, params, function(err, rows, fields){
     if(err) {
     console.log(err);
   } else {
