@@ -1,4 +1,4 @@
-var http = require('http');
+xvvar http = require('http');
 var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
@@ -194,12 +194,12 @@ var app = http.createServer(function(request,response){
           body = body + data;
         //body에다가 callback이 실행될때마다 data를 추가함.
       });
-      //input 변수에다가 화면에서 값들을 받음.
       request.on('end', function(){
+
           var post = qs.parse(body);
-          var input1 = post['title'];
-          var input2 = post['description'];
-          var input3 = post['author'];
+          var a = post['title'];
+          var b = post['description'];
+          var c = post['author'];
           var mysql      = require('mysql');
           var conn = mysql.createConnection({
             host     : 'localhost',
@@ -207,29 +207,21 @@ var app = http.createServer(function(request,response){
             password : '187f5391',
             database : 'o2'
           });
+
           conn.connect();
+
           var sql = 'INSERT INTO topic (title, description, author) VALUES(?, ?, ?)';
-          var params = [input1, input2, input3];
-          var description2 = "데이터가 입력되었습니다" + input1 + " " + input2 + " " + input3;
-          var description3 = `
-            <p>데이터가 입력되었습니다</p>
-            <p>제목 : ${input1}</p>
-            <p>설명 : ${input2}</p>
-            <p>저자 : ${input3}</p>
-          `
-          //쿼리실행
+          var params = [a, b, c];
           conn.query(sql, params, function(err, rows, fields){
               if(err) {
               console.log(err);
             } else {
-              ////response.writeHead(302, {Location: `/?id=test3`}); //이거 주석처리하면 success가화면에뜸.
-              //response.end('success'); //여기다가 글자 써봐 바로바로 화면에 바로바로바뀜.
-              console.log(rows);
+
+              //response.writeHead(302, {Location: `/?id=test3`});
+              response.end('success'); //여기다가 글자 써봐 바로바로 화면에 바로바로바뀜.
+              //console.log(rows);
             }
-          });
-          fs.writeFile(`data/test3`, description3, 'utf8', function(err){
-              response.writeHead(302, {Location: `/?id=test3`});
-              response.end('success');
+
           });
           //console.log(post['title'])
            //이런방식으로 데이터 읽어와야함~!
