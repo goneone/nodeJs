@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>childenodes</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <p id="para">이것은 <b>문단</b>이다.</p>
+  <hr>
+  <script>
+    var para = document.getElementById("para");
+      document.write(para.firstChild.nodeValue + "<br>");
+      document.write(para.textContent + "<br>");
+      document.write(para.innerHTML + "<br>");
+      document.write(para.innerText + "<br>");
+      document.write(para.outerText + "<br>");
+      alert(para.outerHTML);
+  </script>
+</body>
+</html>
