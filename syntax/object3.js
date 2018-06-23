@@ -8,6 +8,6 @@ var o = {
     console.log(this.v2);
   }
 }
-
+JJ 12
 o.f1();
 o.f2();
