@@ -24,7 +24,7 @@ var app = http.createServer(function(request,response){
             `<h2>${title}</h2>${description}`,
             // 눌렀을 때 /create로 이동
             `<a href="/create">create</a>
-            <a href="/crud">crud</a>`
+            <a href="/insert">insert</a>`
           );
           response.writeHead(200);
           response.end(html);
@@ -172,12 +172,12 @@ var app = http.createServer(function(request,response){
             response.end();
           })
       });
-    } else if(pathname === '/crud'){
+    } else if(pathname === '/insert'){
       fs.readdir('./data', function(error, filelist){
-        var title = 'WEB - crud';
+        var title = 'WEB - insert';
         var list = template.list(filelist);
         var html = template.HTML(title, list, `
-          <form action="/crud_process" method="post">
+          <form action="/insert_process" method="post">
           <p><input type="text" name="title" placeholder="title"></p>
           <p><input type="text" name="description" placeholder="description"></p>
           <p><input type="text" name="author" placeholder="author"></p>
@@ -188,7 +188,7 @@ var app = http.createServer(function(request,response){
         response.writeHead(200);
         response.end(html);
       });
-    } else if(pathname === '/crud_process'){
+    } else if(pathname === '/insert_process'){
       var body = '';
       request.on('data', function(data){
           body = body + data;
@@ -212,17 +212,17 @@ var app = http.createServer(function(request,response){
           var params = [input1, input2, input3];
           var description2 = "데이터가 입력되었습니다" + input1 + " " + input2 + " " + input3;
           var description3 = `
-            <p>데이터가 입력되었습니다</p>
-            <p>제목 : ${input1}</p>
-            <p>설명 : ${input2}</p>
-            <p>저자 : ${input3}</p>
+            <p><h1>데이터가 입력되었습니다</h1></p>
+            제목 : ${input1}
+            설명 : ${input2}
+            저자 : ${input3}
           `
           //쿼리실행
           conn.query(sql, params, function(err, rows, fields){
               if(err) {
               console.log(err);
             } else {
-              ////response.writeHead(302, {Location: `/?id=test3`}); //이거 주석처리하면 success가화면에뜸.
+              ////response.writeHead(302, {Location: `/?id=insertSuccessPage`}); //이거 주석처리하면 success가화면에뜸.
               //response.end('success'); //여기다가 글자 써봐 바로바로 화면에 바로바로바뀜.
               console.log(rows);
             }
@@ -236,9 +236,73 @@ var app = http.createServer(function(request,response){
           //qs는 쿼리스트링이라는 nodejs가 갖고있는 모듈을 가져오는 것임. ()맨위에 선언했음)
           //그 qs의 parse라는 함수에다가 body를 입력값으로 주면 post 데이터에 정보가 들어가게됨.
         });
+      } else if(pathname === '/select'){
+        fs.readdir('./data', function(error, filelist){
+          var title = 'WEB - select';
+          var list = template.list(filelist);
+          var html = template.HTML(title, list, `
+            <form action="/select_process" method="post">
+            <p><input type="text" name="title" placeholder="title"></p>
+            <p><input type="text" name="description" placeholder="description"></p>
+            <p><input type="text" name="author" placeholder="author"></p>
+            <p>
+              <input type = "submit">
+            </p>
+          `, '');
+          response.writeHead(200);
+          response.end(html);
+        });
+      } else if(pathname === '/select_process'){
+        var body = '';
+        request.on('data', function(data){
+            body = body + data;
+          //body에다가 callback이 실행될때마다 data를 추가함.
+        });
+        //input 변수에다가 화면에서 값들을 받음.
+        request.on('end', function(){
+            var post = qs.parse(body);
+            var input1 = post['title'];
+            var input2 = post['description'];
+            var input3 = post['author'];
+            var mysql      = require('mysql');
+            var conn = mysql.createConnection({
+              host     : 'localhost',
+              user     : 'root',
+              password : '187f5391',
+              database : 'o2'
+            });
+            conn.connect();
+            var sql = 'INSERT INTO topic (title, description, author) VALUES(?, ?, ?)';
+            var params = [input1, input2, input3];
+            var description2 = "데이터가 입력되었습니다" + input1 + " " + input2 + " " + input3;
+            var description3 = `
+              <p>데이터가 입력되었습니다</p>
+              <p>제목 : ${input1}</p>
+              <p>설명 : ${input2}</p>
+              <p>저자 : ${input3}</p>
+            `
+            //쿼리실행
+            conn.query(sql, params, function(err, rows, fields){
+                if(err) {
+                console.log(err);
+              } else {
+                ////response.writeHead(302, {Location: `/?id=insertSuccessPage`}); //이거 주석처리하면 success가화면에뜸.
+                //response.end('success'); //여기다가 글자 써봐 바로바로 화면에 바로바로바뀜.
+                console.log(rows);
+              }
+            });
+            fs.writeFile(`data/test3`, description3, 'utf8', function(err){
+                response.writeHead(302, {Location: `/?id=test3`});
+                response.end('success');
+            });
+            //console.log(post['title'])
+             //이런방식으로 데이터 읽어와야함~!
+            //qs는 쿼리스트링이라는 nodejs가 갖고있는 모듈을 가져오는 것임. ()맨위에 선언했음)
+            //그 qs의 parse라는 함수에다가 body를 입력값으로 주면 post 데이터에 정보가 들어가게됨.
+          });
       } else {
-      response.writeHead(404);  //파일을 찾을수없다는 에러
-      response.end('Not found'); //여기다가 글자 써봐 바로바로 화면에 바로바로바뀜.
+        response.writeHead(404);  //파일을 찾을수없다는 에러
+        response.end('Not found'); //여기다가 글자 써봐 바로바로 화면에 바로바로바뀜.
     }
 });
 app.listen(3000);
