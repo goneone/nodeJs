@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+  <li>abcd</li>
+  <li>efg</li>
+  <li>hijklmn</li>
+  <li id="active">CSS</li>
+<script>
+  var lis = document.getElementsByTagName('li');
+  for (var i = 0; i < lis.length; i++) {
+    lis[i].style.color = 'blue';
+  }
+
+  var li = document.getElementById('active');
+  li.style.color = 'red';
+
+
+  /*
+  $('li').css('color','red'); ==
+
+  var lis = document.getElementsByTagName('li');
+  for (var i = 0; i < lis.length; i++) {
+    lis[i].style.color = 'red'
+  }
+
+  둘은 같은 의미임. 제이쿼리 라이브러리는
+  이렇게 자주 쓰는 것을 편하게 사용하도록(?) 한거임.
+  */
+</script>
+</body>
+</html>
