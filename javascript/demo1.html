@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    //$.get은 ajax 통신을 가능케함.
+    //get메소드의 첫번쨰인자는 데이터 or url, 두번쨰인자는 함수.
+    //두번째인자는 서버랑 통신이 끝났을 때 호출되도록 약속된..호출되도록 기대하는 함수
+    $.get('./datasource.json.js',
+        function(result){ //result는 읽은 정보를 자바스크립트의 객체로 만들어서 함수의 값으로 전달함.
+        console.log(result); //function을 인자로해서. 리스트를만든다던가..뭐 웹페이지를 바꾼다던가할수있음. 사용자가 어떠한 처리를 내맘대로 할수 있다 이거임
+    }, 'json');            //서버에서 ajax를 위한 처리는 누가 ajax를 콜하던간에 똑같다. 그건 get메서드가 하는거고 그정보를 어떠헥 가공할지.를 콜백함수를 통해서 인자를 전달받아서.함수를 인자로전달받아서 내맘대로 한다이거임!!
+</script>
+</body>
+</html>
