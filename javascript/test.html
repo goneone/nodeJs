@@ -1,7 +1,6 @@
 <html>
 <head>
 	<title> firstchild</title>
-	<script src="basicmodel.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 
@@ -9,8 +8,11 @@
   <p> 찍어 </p>
 	<h1 id ="header">클릭해봐!</h1>
 <script>
-	var test = document.getElementById("header");
-	document.write(text);
+
+	var header = document.getElementById("header");
+ 	header.onclick = function() {
+		alert("클릭했습니다");
+	}
 </script>
 </body>
 </html>

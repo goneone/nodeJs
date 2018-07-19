@@ -204,7 +204,7 @@ var app = http.createServer(function(request,response){
           var conn = mysql.createConnection({
             host     : 'localhost',
             user     : 'root',
-            password : '187f5391',
+            password : '******1', ///////////이부분 비밀번호넣어줘야함
             database : 'o2'
           });
           conn.connect();
@@ -268,7 +268,7 @@ var app = http.createServer(function(request,response){
             var conn = mysql.createConnection({
               host     : 'localhost',
               user     : 'root',
-              password : '187f5391',
+              password : '******1', ///////////이부분 비밀번호넣어줘야함
               database : 'o2'
             });
             conn.connect();
