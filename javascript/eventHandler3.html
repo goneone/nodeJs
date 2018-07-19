@@ -1,0 +1,36 @@
+<html>
+<head>
+
+</head>
+
+<body>
+  <form method="GET" action="eventHandler3.html" id ="form1"
+  onsubmit="console.log('from tag'); return false;">
+
+  이름 :  <input type="text" name="id"><br>
+  메시지 : <input type="text" name="msg"><br>
+  <input type="submit">
+  </form>
+
+  <script>
+      var t = document.getElementById("form1");
+      t.onsubmit = function a() {
+        console.log("from property");
+        return false; //EventHandler에서 refturn false 시 비활성화 됨
+      }
+
+      function b() {
+        console.log("from addEventListener");
+        return false;
+      }
+
+      function c() {
+        console.log("from addEventListener22");
+        return false;
+      }
+      t.addEventListener("submit", b); //인자를 두개받음. 어떤 이벤트인지와 이벤트를 핸들링할 함수.
+      //addEventListner 메소드는 여러개의 이벤트 핸들러를 등록할수 있음.
+      t.addEventListener("submit", c);
+  </script>
+</body>
+</html>
