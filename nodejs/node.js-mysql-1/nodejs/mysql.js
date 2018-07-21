@@ -4,7 +4,7 @@ var connection = mysql.createConnection({ //mysql의 메소드를 호출  메소
   user     : 'root',
   password : 'root',
   database : 'opentutorials', //만들었었던 db임~!
-  port: 3307
+  port: '3307'
 });
 
 connection.connect();

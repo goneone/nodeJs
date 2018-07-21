@@ -5,18 +5,41 @@ var qs = require('querystring');
 var template = require('./lib/template.js');
 var path = require('path');
 var sanitizeHtml = require('sanitize-html');
+//mysql 모듈 가져오기
+var mysql = require('mysql');
+//모듈을 가져오고 mysql에 접속하기
+var db = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'root',
+  database : 'opentutorials',
+  port: '3307'
+});
+db.connect();
 
 var app = http.createServer(function(request,response){
     var _url = request.url;
     var queryData = url.parse(_url, true).query;
     var pathname = url.parse(_url, true).pathname;
-    if(pathname === '/'){
-      if(queryData.id === undefined){
-        fs.readdir('./data', function(error, filelist){
+    if(pathname === '/'){ //최상위경로라면.
+      if(queryData.id === undefined){ //메인페이지라면
+        /*fs.readdir('./data', function(error, filelist){
           var title = 'Welcome';
           var description = 'Hello, Node.js';
           var list = template.list(filelist);
           var html = template.HTML(title, list,
+            `<h2>${title}</h2>${description}`,
+            `<a href="/create">create</a>`
+          );
+          response.writeHead(200);
+          response.end(html);
+        });*/
+        db.query('SELECT * FROM topic', function(error,topics){ //여기서 function은 쿼리문이 실행된후에 실행될 콜백 함수임
+          console.log(topics);
+          var title = 'Welcome';
+          var description = 'Hello, Node.js';
+          var list = template.list(topics); // template.js에 있는 list프로퍼티의 함수
+          var html = template.HTML(title, list, //template.html은 웹페이지의 가장 큰틀의 html코드를 만들어줌
             `<h2>${title}</h2>${description}`,
             `<a href="/create">create</a>`
           );
@@ -140,4 +163,4 @@ var app = http.createServer(function(request,response){
       response.end('Not found');
     }
 });
-app.listen(3002);
+app.listen(3003);
