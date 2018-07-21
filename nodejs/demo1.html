@@ -2,12 +2,14 @@
 <html>
 <head>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<meta charset="utf-8">
 </head>
 <body>
 <script type="text/javascript">
     //$.get은 ajax 통신을 가능케함.
     //get메소드의 첫번쨰인자는 데이터 or url, 두번쨰인자는 함수.
     //두번째인자는 서버랑 통신이 끝났을 때 호출되도록 약속된..호출되도록 기대하는 함수
+    alert("보냅니다");
     $.get('./datasource.json.js', function(result){
         console.log(result);
     }, 'json');
