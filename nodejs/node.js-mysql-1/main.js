@@ -157,11 +157,16 @@ var app = http.createServer(function(request,response){
           body = body + data;
       });
       request.on('end', function(){
+          //qs는 쿼리스트링이라는 nodejs가 갖고 있는 모듈을 가져오는 것임. ()맨위에 선언했음.
+          //그 qs의 parse라는 함수에다가 body를 입력값으로 주면 post 데이터에 정보가 들어가게 됨.
           var post = qs.parse(body);
-          var id = post.id;
-          var filteredId = path.parse(id).base;
-          fs.unlink(`data/${filteredId}`, function(error){
+          db.query('DELETE from topic where id=?', [post.id], function(error, result){
+            if(error) {
+              throw error;
+            }
             response.writeHead(302, {Location: `/`});
+            //200은 성공, 302는 다른페이지로 리다이렉션시키라는 뜻
+            //create를 한 다음에 그 생성한 페이지로 이동하게끔!
             response.end();
           })
       });
