@@ -144,6 +144,7 @@ var app = http.createServer(function(request,response){
       });
       request.on('end', function(){
           var post = qs.parse(body);
+          console.log(post);
           db.query('UPDATE topic SET title=?, description=?, author_id=1 where id=?', [post.title, post.description, post.id], function(error, result){
               response.writeHead(302, {Location: `/?id=${post.id}`});
               //200은 성공, 302는 다른페이지로 리다이렉션시키라는 뜻
