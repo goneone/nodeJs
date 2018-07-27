@@ -70,10 +70,17 @@ var app = http.createServer(function(request,response){
     } else if(pathname === '/create'){
 
       db.query(`SELECT * FROM topic`, function(error,topics){
+        db.query(`SELECT * FROM author`, function(error2,authors){
+          console.log(authors);
+          var tag ='';
+          for(var i=0; i<authors.length; i++) {
+            tag += `<option value="1">${authors[i].name}</option>`
+          }
           var title = 'Create';
           var list = template.list(topics);
           //form 태그란? 사용자의 데이터를 서버에 전송하는 방법.
           //form action="서버로 전송한 데이터를 수신할 url" method="데이터를 전송하는 방법"
+          //밑의 html에서 select name=author로 시작하는 부분이 셀렉트 박스 만드는 부분임
           var html = template.HTML(title, list,
             `
              <form action="/create_process" method="post">
@@ -82,15 +89,21 @@ var app = http.createServer(function(request,response){
                   <textarea name="description" placeholder="description"></textarea>
                 </p>
                 <p>
+                  <select name="author">
+                  ${tag};
+                </p>
+                <p>
                   <input type="submit">
                 </p>
               </form>
               `,
             `<a href="/create">create</a>`
           );
+
           response.writeHead(200);
           response.end(html);
         });
+      });
     } else if(pathname === '/create_process'){
       var body = '';
       request.on('data', function(data){
