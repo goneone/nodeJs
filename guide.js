@@ -19,6 +19,7 @@ pm2 monit <-- 현재 실행되고 있는 프로그램을 보여줌.
 pm2 stop main <-- main.js 종료
 pm2 start main.js -- watch <--수정할떄마다 껐다안켜도되게하는거
 pm2 log <-- 로그보여줌
+pm2 flush <-- log 지움.
 --------------------------------------------------------
 template Literal 이란?
 특수한 문자를 사용함.

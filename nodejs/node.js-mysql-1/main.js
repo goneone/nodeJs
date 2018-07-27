@@ -38,17 +38,23 @@ var app = http.createServer(function(request,response){
          if(error){
            throw error; //에러가 있을 경우 nodejs가 그다음 명령을 실행시키지 않고 applications을 중지시킴.
          }
-         db.query(`SELECT * FROM topic WHERE id=?`,[queryData.id], function(error2, topic){
-           //원래  `SELECT * FROM topic WHERE id=${queryData.id}` 이렇게 했었는데 보안상의 이유로 위의코드처럼 코딩할것.
+         db.query(`SELECT * FROM topic LEFT JOIN author ON topic.author_id=author.id WHERE topic.id=?`,[queryData.id], function(error2, topic){
+           //원래  `SELECT * FROM topic WHERE id=${queryData.id}` 이렇게 했었는데 보안상의 이유로
+           //(`SELECT * FROM topic WHERE id=?`,[queryData.id] 이렇게 코딩할것.
            //위의 방식처럼 배열에 담아서 주게 되면 결과는 같지만 값이 sql문의 물음표에 치환되어 들어갈때 공격의 의도가 있는 코드들은 알아서 세탁해줌.
            if(error2){
              throw error2;
            }
+           console.log(topic);
           var title = topic[0].title;
           var description = topic[0].description;
           var list = template.list(topics);
           var html = template.HTML(title, list,
-            `<h2>${title}</h2>${description}`,
+            `
+            <h2>${title}</h2>
+            ${description}
+            <p>by ${topic[0].name}</p>
+            `,
             ` <a href="/create">create</a>
                 <a href="/update?id=${queryData.id}">update</a>
                 <form action="delete_process" method="post">
