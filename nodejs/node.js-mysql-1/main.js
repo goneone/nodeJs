@@ -125,9 +125,7 @@ var app = http.createServer(function(request,response){
               //200은 성공, 302는 다른페이지로 리다이렉션시키라는 뜻
               //create를 한 다음에 그 생성한 페이지로 이동하게끔!
               response.end();
-              console.log("-----------333create_process log------------------");
-              console.log(result)
-              console.log("-----------333create_process log------------------");
+
             }
           )
       });

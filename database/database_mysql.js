@@ -1,8 +1,9 @@
+///password는 기존 패스워드.
 var mysql      = require('mysql');
 var conn = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : '187f5391',
+  password : '*******',
   database : 'o2'
 });
 
