@@ -45,7 +45,9 @@ var app = http.createServer(function(request,response){
            if(error2){
              throw error2;
            }
+           console.log("-------------topic-----------")
            console.log(topic);
+           console.log("-------------topic-----------")
           var title = topic[0].title;
           var description = topic[0].description;
           var list = template.list(topics);
@@ -94,7 +96,6 @@ var app = http.createServer(function(request,response){
               `,
             `<a href="/create">create</a>`
           );
-
           response.writeHead(200);
           response.end(html);
         });
@@ -103,14 +104,19 @@ var app = http.createServer(function(request,response){
       var body = '';
       request.on('data', function(data){
           body = body + data;
+          console.log("-----------create_process log------------------");
+          console.log(body); //화면에서 입력한 값.
+          console.log("-----------create_process log------------------");
       });
       request.on('end', function(){
           var post = qs.parse(body);
-
+          console.log("-----------222create_process log------------------");
+          console.log(post);
+          console.log("-----------2222create_process log------------------");
           db.query(`
             INSERT INTO topic (title, description, created, author_id)
             VALUES(?, ?, NOW(), ?)`,
-            [post.title, post.description, 1],
+            [post.title, post.description, post.author],
             function(error, result) {
               if(error) {
                 throw error;
@@ -119,6 +125,9 @@ var app = http.createServer(function(request,response){
               //200은 성공, 302는 다른페이지로 리다이렉션시키라는 뜻
               //create를 한 다음에 그 생성한 페이지로 이동하게끔!
               response.end();
+              console.log("-----------333create_process log------------------");
+              console.log(result)
+              console.log("-----------333create_process log------------------");
             }
           )
       });

@@ -58,3 +58,36 @@ CREATE TABLE topic ( id int(11) NOT NULL AUTO_INCREMENT, title varchar(100) NOT 
 SHOW TABLES; 테이블 보기
 insert into topic (title, description,author) values ('test', 'testing', 'testing');
 데이터 삽입
+--------------------------------------------------------
+화면에서 create 클릭시 로직
+1.db에서 콤보박스 값을 받아옴
+db.query(`Select * from author`, function(error2,authors){
+  ~~~~
+}
+2.db에서 받아온 값을 화면에 뿌려줌
+${template.authorSelect(authors)}
+3.화면에서 사용자가 값을 입력하고 데이터를 보냄
+title,description, author를 create_process로 보냄.
+4.create_process는 request.on('data', function(data))
+{~~~~} 로 값을 받음. 이때 
+var body = '';
+request.on('data', function(data){
+    body = body + data;
+    console.log("-----------create_process log------------------");
+    console.log(body); //화면에서 입력한 값.
+    console.log("-----------create_process log------------------");
+});
+body에는 title=5&description=444&author=3
+이런식으로 데이터가 직렬화되어 저장됨
+request.on('end', function(){
+    var post = qs.parse(body);
+qs는 쿼리스트링이라는 nodejs가 갖고있는 모듈임. (위에선언함)
+그 qs의 parse함수에다가 body를 입력해주면
+post데이터는 자바스크립트의 객체형식으로 바뀌는거같음.(내추측임..)
+데이터는 {title : '5', description : '444', author : '3'} 이렇게 바뀜.
+그럼 그 값을 이제 nodejs에서 컨트롤가능하겠지 객체니깐.
+db.query(`
+  INSERT INTO topic (title, description, created, author_id)
+  VALUES(?, ?, NOW(), ?)`,
+  [post.title, post.description, post.author],
+  이렇게 db에 값을 넣고 값이 저장됨.
