@@ -71,11 +71,7 @@ var app = http.createServer(function(request,response){
 
       db.query(`SELECT * FROM topic`, function(error,topics){
         db.query(`SELECT * FROM author`, function(error2,authors){
-          console.log(authors);
-          var tag ='';
-          for(var i=0; i<authors.length; i++) {
-            tag += `<option value="1">${authors[i].name}</option>`
-          }
+
           var title = 'Create';
           var list = template.list(topics);
           //form 태그란? 사용자의 데이터를 서버에 전송하는 방법.
@@ -89,8 +85,7 @@ var app = http.createServer(function(request,response){
                   <textarea name="description" placeholder="description"></textarea>
                 </p>
                 <p>
-                  <select name="author">
-                  ${tag};
+                  ${template.authorSelect(authors)}
                 </p>
                 <p>
                   <input type="submit">
