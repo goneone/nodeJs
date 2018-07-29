@@ -41,5 +41,19 @@ module.exports = {
         ${tag}
       </select>
     `
+  },authorTable:function(authors) {
+    var tag = '<table>';
+    for (var i = 0; i < authors.length; i++) {
+      tag += `
+              <tr>
+                <td>${authors[i].name}</td>
+                <td>${authors[i].profile}</td>
+                <td>update</td>
+                <td>delete</td>
+              </tr>
+             `
+    }
+    tag +='</table>'
+    return tag;
   }
 }
