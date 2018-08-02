@@ -1,6 +1,7 @@
 var db = require('./db');
 var template = require('./template.js');
 var qs = require('querystring');
+var url = require('url');
 
 exports.home = function(request, response){
     db.query(`SELECT * FROM topic`, function(error,topics){ //여기서 function은 쿼리문이 실행된후에 실행될 콜백 함수임
@@ -18,7 +19,7 @@ exports.home = function(request, response){
                   border: 1px solid black;
                 }
               </style>
-              <form action="create_author_process" method="post">
+              <form action="/author/create_process" method="post">
                <p>
                 <input type="text" name="name" placeholder="name">
                </p>
@@ -38,19 +39,19 @@ exports.home = function(request, response){
       });
 }
 
-exports.create_author_process = function(request, response){
+exports.create_process = function(request, response){
     var body = '';
       request.on('data', function(data){
           body = body + data;
-          console.log("-----------create_process log------------------");
+          console.log("-----------/author/create_process log------------------");
           console.log(body); //화면에서 입력한 값.
-          console.log("-----------create_process log------------------");
+          console.log("-----------/author/create_process log------------------");
       });
       request.on('end', function(){
           var post = qs.parse(body);
-          console.log("-----------222create_process log------------------");
+          console.log("-----------222/author/create_process log------------------");
           console.log(post);
-          console.log("-----------2222create_process log------------------");
+          console.log("-----------222/author/create_process log------------------");
           db.query(`
             INSERT INTO author (name, profile)
               VALUES(?, ?)`,
@@ -65,5 +66,48 @@ exports.create_author_process = function(request, response){
               response.end();
             }
           )
+      });
+}
+
+exports.update = function(request, response){
+    db.query(`SELECT * FROM topic`, function(error,topics){ //여기서 function은 쿼리문이 실행된후에 실행될 콜백 함수임
+        db.query(`SELECT * FROM author`, function(error2,authors){
+            console.log(authors)
+            var _url = request.url;
+            var queryData = url.parse(_url, true).query; //url을 분석하는 코드.
+            var title = 'author';
+            var list = template.list(topics); // template.js에 있는 list프로퍼티의 함수
+            var html = template.HTML(title, list, //template.html은 웹페이지의 가장 큰틀의 html코드를 만들어줌
+
+              `
+                ${template.authorTable(authors)}
+              <style>
+                table {
+                  border-collapse:collapse;
+                }
+                td{
+                  border: 1px solid black;
+                }
+              </style>
+              <form action="/author/update_process" method="post">
+               <p>
+                <input type="hidden" name="id" value="${queryData.id}">
+               </p>
+               <p>
+                <input type="text" name="name" placeholder="name">
+               </p>
+               <p>
+                <textarea name="profile" placeholder="description"></textarea>
+               </p>
+               <p>
+                <input type="submit">
+               </p>
+              </form>
+              `,
+              ``
+            );
+            response.writeHead(200);
+            response.end(html);
+        });
       });
 }
