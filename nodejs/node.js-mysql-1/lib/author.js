@@ -141,3 +141,32 @@ exports.update_process = function(request, response){
           )
       });
 }
+
+exports.delete_process = function(request, response){
+    var body = '';
+      request.on('data', function(data){
+          body = body + data;
+          console.log("-----------/author/delete_process log------------------");
+          console.log(body); //화면에서 입력한 값.
+          console.log("-----------/author/delete_process log------------------");
+      });
+      request.on('end', function(){
+          var post = qs.parse(body);
+          console.log("-----------222/author/delete_process log------------------");
+          console.log(post);
+          console.log("-----------222/author/delete_process log------------------");
+          db.query(`
+            DELETE from author WHERE id=?`,
+            [post.id],
+            function(error, result){
+              if(error){
+                throw error;
+              }
+              response.writeHead(302, {Location: `/author`});
+              //200은 성공, 302는 다른페이지로 리다이렉션시키라는 뜻
+              //create를 한 다음에 그 생성한 페이지로 이동하게끔!
+              response.end();
+            }
+          )
+      });
+}
