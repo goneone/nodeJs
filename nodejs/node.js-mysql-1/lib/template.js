@@ -43,6 +43,16 @@ module.exports = {
     `
   },authorTable:function(authors) {
     var tag = '<table>';
+    //테이블의 제목부분.
+      tag+= `
+      <tr>
+        <td>저자명</td>
+        <td>저서</td>
+        <td>업데이트</td>
+        <td>삭제</td>
+        <td>저자의 저서까지 전체 삭제</td>
+      </tr>
+      `
     for (var i = 0; i < authors.length; i++) {
       tag += `
               <tr>
@@ -53,6 +63,12 @@ module.exports = {
                   <form action="/author/delete_process" method="post">
                     <input type="hidden" name="id" value=${authors[i].id}>
                     <input type="submit" value="delete">
+                  </form>
+                </td>
+                <td>
+                  <form action="/author/customizing_delete_process" method="post">
+                    <input type="hidden" name="id" value=${authors[i].id}>
+                    <input type="submit" value="All delete" >
                   </form>
                 </td>
               </tr>
