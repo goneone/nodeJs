@@ -49,7 +49,7 @@ module.exports = {
         <td>저자명</td>
         <td>저서</td>
         <td>업데이트</td>
-        <td>삭제</td>
+        <td>저자 삭제</td>
         <td>저자의 저서까지 전체 삭제</td>
       </tr>
       `
