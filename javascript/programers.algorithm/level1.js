@@ -14,5 +14,3 @@ function solution(s) {
 
     return answer;
 }
-
-//substring을 이용한 두번째 풀이
