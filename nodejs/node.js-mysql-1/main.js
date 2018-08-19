@@ -35,6 +35,8 @@ var app = http.createServer(function(request,response){
      author.delete_process(request, response);
    } else if(pathname === '/author/customizing_delete_process'){
      author.customizing_delete_process(request, response);
+   } else if(pathname === '/author/search_author_process'){
+     author.search_author_process(request, response);
    } else {
      response.writeHead(404);
      response.end('Not found');

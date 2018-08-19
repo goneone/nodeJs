@@ -20,6 +20,15 @@ exports.home = function(request, response){
                   border: 1px solid black;
                 }
               </style>
+              <form action="/author/search_author_process" method="get">
+               <p>
+                <input type="text" name="search" placeholder="Search!">
+               </p>
+               <p>
+                <input type="submit" value="Search">
+               </p>
+              </form>
+
               <form action="/author/create_process" method="post">
                <p>
                 <input type="text" name="name" placeholder="name">
@@ -201,3 +210,34 @@ exports.customizing_delete_process = function(request, response){
           });
         });
       }
+
+//내가만든 검색창..
+exports.search_author_process = function(request, response){
+    var body = '';
+      request.on('data', function(data){
+          body = body + data;
+          console.log("-----------/author/create_process log------------------");
+          console.log(body); //화면에서 입력한 값.
+          console.log("-----------/author/create_process log------------------");
+      });
+      request.on('end', function(){
+          var post = qs.parse(body);
+          console.log("-----------222/author/create_process log------------------");
+          console.log(post);
+          console.log("-----------222/author/create_process log------------------");
+          db.query(`
+            INSERT INTO author (name, profile)
+              VALUES(?, ?)`,
+            [post.name, post.profile],
+            function(error, result){
+              if(error){
+                throw error;
+              }
+              response.writeHead(302, {Location: `/author`});
+              //200은 성공, 302는 다른페이지로 리다이렉션시키라는 뜻
+              //create를 한 다음에 그 생성한 페이지로 이동하게끔!
+              response.end();
+            }
+          )
+      });
+}
