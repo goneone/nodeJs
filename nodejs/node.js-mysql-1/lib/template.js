@@ -56,7 +56,7 @@ module.exports = {
       </tr>
       `
     for (var i = 0; i < authors.length; i++) {
-      
+
       tag += `
               <tr>
                 <td>${sanitizeHtml(authors[i].name)}</td>
