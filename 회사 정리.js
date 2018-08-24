@@ -44,6 +44,21 @@ table_option_setting : function {
 }
 abcdegg : function {}
 ---------------------------------------
+조회 누르고 검색. -> 검색시 옵션 변경후 페이지 바꿈 -> 이전데이터 값이 나와야 하는데 옵션 변경 값이 나옴
+해결 방법
+JLSMSDM001M 674 Line 참조
+조회시에는 searchEquipList 메소드를 타고
+searchEquipList : function(event, widget) {
+  Top.Controller.get('HLSMSDM001MLogic').table_data_binding(1);
+}
+페이지 넘길시에는 table_data_binding을 탐.
+
+원인 - 옵션 변경후 페이지를 바꿀떄 table_data_binding에 바로가는데 변수가 다 거기 선언되어있어서
+변경한 값을 물고 있음.
+조치 - 임시변수를 searchEquipList에 선언함. (조회를 눌렀을떄 값을 물고 있도록)
+
+
+---------------------------------------
 
 Jquery를 이용해서 table의 column 컨트롤
 공통의 setInnerText참조
@@ -53,4 +68,14 @@ var dom = table.getElement('.body-cell.column_'+11);
 //$elem = $(dom)[2]
 $(dom)[2].attributes["value"] = "5%";
 $(dom)[2].textContent = "5%"; <--이게 화면에 뿌려주는거..
- 
+
+
+**************************************************
+주말에 공부해야 할것
+모델1, 모델2 차이점
+지역변수 ? 그거 클로저.
+게시판 기능 1개 추가.
+**************************************************
+27일 commit해야할것.
+ -대용량 엑셀다운 작업한거 커밋.
+ -절대로 47 리더기는 커밋하지 말것.
