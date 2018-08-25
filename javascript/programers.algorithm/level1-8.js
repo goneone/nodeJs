@@ -3,14 +3,20 @@
 //내풀이
 
 function solution(s){
-    var answer;
-    changeS = s.lowercase();
-    if(changeS.indexOf("p")= -1 && changeS.indexOf("y")= -1 ) {
-       answer = true;
+    var lowercaseS = s.toLowerCase()
+    //문자열에서 p or y의 개수를 구하는 function
+    function split(lowercaseS, value) {
+          lowercaseS.split(value);
+          return lowercaseS.split(value).length-1;
+        }
+    //p와 y가 문자열에 없으면 true 리턴
+    if(lowercaseS.indexOf("p")== -1 && lowercaseS.indexOf("y")== -1 ) {
+       return true;
+    } else {
+        var valueP = split(lowercaseS, "p")
+        var valueY = split(lowercaseS, "y")
+
+        if (valueP == valueY ) { return true; }
+        else { return false; }
     }
-
-    // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
-    console.log('Hello Javascript')
-
-    return answer;
 }
