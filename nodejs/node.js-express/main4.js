@@ -149,7 +149,7 @@ app.post('/delete_process', function(request, response){
     //express에서는 편리하게 리다이렉션 할 수 있게 redirect를 제공한다.
     response.redirect('/'); //
   });
-});ㅗㅛㅗ7ㅗㅠㅛ7ㅗㅗㅕ7ㅓ8
+});
 
 //app.listen(3005, () => console.log('Example app listening on port 3000!')) //listen메소드가 실행될 때 웹서버가 실행되면서
 //3005번 port에 listen이 가게 되고 성공하게되면 console.log를 실행함.

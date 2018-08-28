@@ -10,9 +10,9 @@ var app = http.createServer(function(request,response){
     if(pathname === '/'){ //최상위경로라면.
       if(queryData.id === undefined){ //메인페이지라면
        topic.home(request, response);
-     } else {
+      }else{
        topic.page(request, response);
-     }
+      }
    } else if(pathname === '/create'){
      topic.create(request, response);
    } else if(pathname === '/create_process'){

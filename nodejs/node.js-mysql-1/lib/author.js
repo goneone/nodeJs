@@ -22,6 +22,9 @@ exports.home = function(request, response){
                   border: 1px solid black;
                 }
               </style>
+               <p>
+                  <a href="http://www.naver.com">1</a>
+               </p>
               <form action="/author/search_author" method="post">
                <p>
                 <input type="text" name="searchAuthorName" placeholder="Search Name!">
