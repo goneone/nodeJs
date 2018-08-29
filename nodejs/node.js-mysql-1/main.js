@@ -25,6 +25,8 @@ var app = http.createServer(function(request,response){
      topic.delete_process(request, response);
    } else if(pathname === '/author'){
      author.home(request, response);
+   } else if(pathname === '/author/'){
+     author.page(request, response);
    } else if(pathname === '/author/create_process'){
      author.create_process(request, response);
    } else if(pathname === '/author/update'){

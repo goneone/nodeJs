@@ -84,7 +84,7 @@ module.exports = {
 
     for (var i = 1; i <= totalPage; i++) {
       tag += `
-                <a href="http://www.naver.com">${i}</a>
+                <a href="author/?page=${i}">${i}</a>
              `
     }
     tag +='';
