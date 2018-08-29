@@ -281,23 +281,52 @@ exports.search_author = function(request, response){
 exports.page = function(request, response){
     var _url = request.url;
     var queryData = url.parse(_url, true).query; //url을 분석하는 코드.
-    console.log(queryData.page);
-    console.log(typeof(queryData.page));
-    if(Number(queryData.page) == i) {
-
-    }
+    var queryValue = 1;
+        if(Number(queryData.page) == 1) {
+          queryValue = 0;
+        }
+        else if (Number(queryData.page) == 2) {
+          queryValue = 10;
+        }
+        else if (Number(queryData.page) == 3) {
+          queryValue = 20;
+        }
+        else if (Number(queryData.page) == 4) {
+          queryValue = 30;
+        }
+        else if (Number(queryData.page) == 5) {
+          queryValue = 40;
+        }
+        else if (Number(queryData.page) == 6) {
+          queryValue = 50;
+        }
+        else if (Number(queryData.page) == 7) {
+          queryValue = 60;
+        }
+        else if (Number(queryData.page) == 8) {
+          queryValue = 70;
+        }
+        else if (Number(queryData.page) == 9) {
+          queryValue = 80;
+        }
+        else if (Number(queryData.page) == 10) {
+          queryValue = 90;
+        }
+        console.log("--------start author.js page----------------- ")
+        console.log(queryData)
+        console.log(queryValue)
+        console.log("--------end author.js page----------------- ")
     db.query(`SELECT * FROM topic`, function(error,topics){
         db.query(`SELECT * FROM author`, function(error2,authors){
-          db.query(`SELECT * FROM author ORDER BY id desc LIMIT ?, 10`, [Number(queryData.page)], function(error3,authors2){
+          db.query(`SELECT * FROM author ORDER BY id desc LIMIT ?, 10`, [queryValue], function(error3,authors2){
           var title = 'author';
           var list = template.list(topics); // template.js에 있는 list프로퍼티의 함수
           var totalCount = authors.length; //총 게시물 수
           var countList =  10;//한 페이지에 출력될 게시물 수
-          var totalPage = Math.ceil(totalCount/countList); //3ppage
+          var totalPage = Math.ceil(totalCount/countList);
             if (totalCount % countList > 0) {
               totalPage =Math.ceil(totalPage);
             }
-            console.log(authors2)
           var html = template.HTML(title, list, //template.html은 웹페이지의 가장 큰틀의 html코드를 만들어줌
             `
               ${template.authorTable(authors2)}

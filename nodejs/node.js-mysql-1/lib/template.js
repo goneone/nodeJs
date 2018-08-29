@@ -88,6 +88,7 @@ module.exports = {
              `
     }
     tag +='';
+    console.log(tag);
     return tag;
   }
 }

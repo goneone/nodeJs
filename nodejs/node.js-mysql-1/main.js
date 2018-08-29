@@ -27,6 +27,8 @@ var app = http.createServer(function(request,response){
      author.home(request, response);
    } else if(pathname === '/author/'){
      author.page(request, response);
+   } else if(pathname === '/author/author/'){
+     author.page(request, response);
    } else if(pathname === '/author/create_process'){
      author.create_process(request, response);
    } else if(pathname === '/author/update'){
@@ -47,5 +49,3 @@ var app = http.createServer(function(request,response){
    }
 });
 app.listen(3003);
-
-//테스트 작업
