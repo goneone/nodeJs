@@ -79,40 +79,17 @@ module.exports = {
     }
     tag +='</table>'
     return tag;
-  },paging :function(clickedPage) {
-    var tag = '<table>';
-    //테이블의 제목부분.
-      tag+= `
-      <tr>
-        <td>저자명</td>
-        <td>저서</td>
-        <td>업데이트</td>
-        <td>저자 삭제</td>
-        <td>저자의 저서까지 전체 삭제</td>
-      </tr>
-      `
-    for (var i = 0; i < authors.length; i++) {
+  },paging :function(clickedPage, totalPage) {
+    var tag = '';
 
+    for (var i = 0; i < totalPage; i++) {
       tag += `
-              <tr>
-                <td>${sanitizeHtml(authors[i].name)}</td>
-                <td>${sanitizeHtml(authors[i].profile)}</td>
-                <td><a href="/author/update?id=${authors[i].id}">update</a></td>
-                <td>
-                  <form action="/author/delete_process" method="post">
-                    <input type="hidden" name="id" value=${authors[i].id}>
-                    <input type="submit" value="delete">
-                  </form>
-                </td>
-                <td>
-                  <form action="/author/customizing_delete_process" method="post">
-                    <input type="hidden" name="id" value=${authors[i].id}>
-                    <input type="submit" value="All delete" >
-                  </form>
-                </td>
-              </tr>
+              <br>
+                i
+              </br>
              `
     }
-    tag +='</table>'
+    tag +='';
     return tag;
+  }
 }
