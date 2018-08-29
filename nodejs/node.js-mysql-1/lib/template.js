@@ -79,14 +79,12 @@ module.exports = {
     }
     tag +='</table>'
     return tag;
-  },paging :function(clickedPage, totalPage) {
+  },paging:function(totalPage) {
     var tag = '';
 
-    for (var i = 0; i < totalPage; i++) {
+    for (var i = 1; i <= totalPage; i++) {
       tag += `
-              <br>
-                i
-              </br>
+                <a href="http://www.naver.com">${i}</a>
              `
     }
     tag +='';
