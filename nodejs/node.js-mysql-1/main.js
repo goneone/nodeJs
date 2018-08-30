@@ -7,6 +7,10 @@ var app = http.createServer(function(request,response){
     var _url = request.url;
     var queryData = url.parse(_url, true).query; //url을 분석하는 코드.
     var pathname = url.parse(_url, true).pathname;
+console.log('---------------url datas-------------');
+    console.log(_url);
+    console.log(url.parse(_url, true).pathname);
+console.log('---------------url dddd-------------');
     if(pathname === '/'){ //최상위경로라면.
       if(queryData.id === undefined){ //메인페이지라면
        topic.home(request, response);

@@ -280,6 +280,7 @@ exports.search_author = function(request, response){
 
 exports.page = function(request, response){
     var _url = request.url;
+    debugger;
     var queryData = url.parse(_url, true).query; //url을 분석하는 코드.
     var queryValue = 1;
         if(Number(queryData.page) == 1) {
