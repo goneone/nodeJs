@@ -35,7 +35,7 @@ exports.home = function(request, response){
               <input type="text" name="searchAuthorName" placeholder="Search Name!">
              </p>
              <p>
-              <input type="submit" value="searchAuthorName">
+              <input type="submit" value="search!">
              </p>
             </form>
 
@@ -313,6 +313,7 @@ exports.page = function(request, response){
           queryValue = 90;
         }
         console.log("--------start author.js page----------------- ")
+        console.log(_url)
         console.log(queryData)
         console.log(queryValue)
         console.log("--------end author.js page----------------- ")

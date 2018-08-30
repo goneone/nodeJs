@@ -81,7 +81,7 @@ module.exports = {
     return tag;
   },paging:function(totalPage) {
     var tag = '';
-
+    console.log(14124);
     for (var i = 1; i <= totalPage; i++) {
       tag += `
                 <a href="author/?page=${i}">${i}</a>
@@ -89,6 +89,7 @@ module.exports = {
     }
     tag +='';
     console.log(tag);
+    console.log(444414124);
     return tag;
   }
 }
