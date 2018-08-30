@@ -10,7 +10,7 @@ var app = http.createServer(function(request,response){
 console.log('---------------url datas-------------');
     console.log(_url);
     console.log(url.parse(_url, true).pathname);
-console.log('---------------url dddd-------------');
+console.log('---------------url datas-------------');
     if(pathname === '/'){ //최상위경로라면.
       if(queryData.id === undefined){ //메인페이지라면
        topic.home(request, response);
@@ -30,8 +30,6 @@ console.log('---------------url dddd-------------');
    } else if(pathname === '/author'){
      author.home(request, response);
    } else if(pathname === '/author/'){
-     author.page(request, response);
-   } else if(pathname === '/author/author/'){
      author.page(request, response);
    } else if(pathname === '/author/create_process'){
      author.create_process(request, response);

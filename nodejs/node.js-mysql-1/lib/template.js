@@ -80,7 +80,7 @@ module.exports = {
     tag +='</table>'
     return tag;
   },paging:function(totalPage) {
-    var tag = '';
+    var tag = `<a href="www.naver.com">◀</a>`;
     console.log(14124);
 
     for (var i = 1; i <= totalPage; i++) {
@@ -89,7 +89,7 @@ module.exports = {
       tag += `<a href="/author/?page=${i}">${i + " "}</a>`
 
     }
-
+    tag +=`<a href="www.naver.com">▶</a>`
     console.log(tag);
     console.log(444414124);
     return tag;
