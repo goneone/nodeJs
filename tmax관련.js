@@ -44,7 +44,9 @@ searchEquipList : function(event, widget) {
 
 
 ---------------------------------------
-
+컬럼 안보이게하는 법
+Top.Dom.selectById("HLMADCM002M_TableView2").setColumnsVisible([3,4],false);
+---------------------------------------
 Jquery를 이용해서 table의 column 컨트롤
 공통의 setInnerText참조
 
