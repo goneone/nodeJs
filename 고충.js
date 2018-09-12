@@ -1,5 +1,6 @@
 1.자바 Mysql 연동시에 고생한...2018/09/01
 
+1-1
 현상
 과장님이 주신 과제프로젝트(kt)에서 클라이언트가 보낸 내용을 바이트로 바꿔서 소켓을 통해 서버가 읽고
 db에 해당 내용을 파싱하는 과정을 진행 중에 발생함.
@@ -22,3 +23,19 @@ mysql-connector-java 버전 5.1.X 이후 버전부터 KST 타임존을 인식하
 conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/opentutorials?" , "root", "root"); -> 밑으 코드로 변경
 conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/opentutorials?characterEncoding=UTF-8&serverTimezone=UTC" , "root", "root");
 JDBC URL에 위와 같이 파라미터를 추가하면 끝.
+
+1-2
+현상, 오류
+mysql-connector-java 버전 6.xx로 변경하면 com.mysql.jdbc.Driver가 Deprecated 됐다고 경고메시지가 뜸
+
+이유
+버전바뀌면서 serverTimezone파라미터가 필수가 돼서 빼먹으면 DB연결이 되지않음
+
+해결책
+com.mysql.jdbc.Driver를 com.mysql.cj.jdbc.Driver로 변경
+기본적으로 DB연결시 jdbc:mysql://{ip주소}:{port번호}/{databaseName} 식으로 url을 설정해서  연결했었는데
+jdbc:mysql://{ip주소}:{port번호}/{databaseName}?serverTimezone=UTC
+위와같이 serverTimezone 파라미터를 꼭 넣어주어야 한다.
+
+docs링크
+https://dev.mysql.com/doc/relnotes/connector-j/6.0/en/news-6-0-6.html
