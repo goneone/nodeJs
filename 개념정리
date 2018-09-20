@@ -70,3 +70,4 @@ call by value 와 call by reference
 암호화기법
 개인키 (DES) - 대칭 암호 기법
 공개키 (Public Key) - 비대칭 암호 기법
+aes 는 대칭키 암호기법임. (키를 서로 주고받아 가지고있으니까)
