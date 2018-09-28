@@ -21,3 +21,38 @@ document.write(countChar("가나다ABC라마 ABC 바사ABC 아자차 ","ABC"));
 var a= "test";
 a[0] = t 임...
 a는 var로 선언한건데 어째서..?
+--------------------------------------------------------
+두 데이터 중복체크 로직
+ex) 1,2,3,4,5,5 이렇게 있을때 5 발견하는 로직
+function abc() {
+for(var i = 0; i< a.length; i++) {
+for(var j = 0; j<i ; j++) {
+if(a[i] == a[j]) {
+console.log(a[i]);
+}
+}}}
+엑셀 다운로드 관련
+---------------------------------------------------------
+function의 스코프
+체크 로직 할 때  ex
+save : function() {
+  this.duplicationCheck(check);
+
+  if(check == false) {
+    return;
+  }
+},
+
+duplicationCheck : function(check) {
+  if(값이 5보다 작으면~~)
+    check =false;
+    return false;
+}
+
+duplicationCheck 함수의 return은 그함수만 딱 끝내는거임. 그래서
+save function의 경우는 duplicationCheck 함수가 실행되고 그밑에줄이 계속실행 되게됨.
+딱 duplicationCheck함수만 실행후 그 밑에 줄 실행 안하고 종료하고 싶다면
+if(check == false) { return } 이런식으로 save 함수 로직내에서 return을 해줘야함.
+
+함수의 스코프! 기억할것
+----------------------------------------------------------
