@@ -1,0 +1,5 @@
+-guest 화면에 마우스가 들어갔다가 host화면으로 빠지는 단축키 = ctrl + alt
+
+ip주소찾는법
+cmd 창에 ipconfig 치고
+vmnet8의 ip주소.
