@@ -216,3 +216,20 @@ db 테이블에 컬럼 추가 하는 방법
 add해서 추가 한뒤 (저장은 하지 말고), show sql 눌러서 sql문 복사
 
 Z:\3000.구축\01.DB관련가이드\용어신청 테이블 변경요청서 엑셀에 넣고 DBA분에게 반영해달라고 할것 (함부로 반영하지 않기 위해서)
+------------------------------------------------------------------
+300번 배치 재기동 하는 법
+batch
+ll
+ls
+sh blcmcom300_stop.sh
+sh blcmcom300.sh
+------------------------------------------------------------------
+애니링크 로그 보는법
+select * from Anylink.CLOG_MT_V3C
+where 1=1
+and packet_type = 1200
+order by AL_START_TIME desc;
+
+select * from Anylink.CLOG_MT_V3C
+where MACHINE_IP ='81.7.111.220'
+order by AL_START_TIME desc;
