@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="css_basic3.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="static">staitc(default)</div>
+    <div class="relative">relative(left:10px;)</div>
+    <div class="absolute">absolute(left:130px; top:30px)</div>
+    <div class="fixed">fixed(top:250px)</div>
+
+    <!-- absolute는 0,0이래도 top,left 값을 꼭 주는게 좋음-->
+    <!-- absolute는 왜 저기에 있을까?
+    왜냐면 기준점이 wrap이기 때문임.
+    position : absolute는 기준점을 기준으로 배치가됨.
+    상위 엘리먼트중에 포지션이 static이아닌 새끼.
+    즉 relative인 새끼가 기준점이 됨. 여기서는 wrap임.
+    부모중에 relation이 없으면 body가 기준점이 됨.
+    -->
+
+    <!-- fixed는 그 위치 자체에 고정되어 있음. -->
+
+
+  </div>
+</body>
+</html>

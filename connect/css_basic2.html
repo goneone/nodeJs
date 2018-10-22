@@ -2,23 +2,37 @@
 <html>
 <head>
   <style>
-      div ul li div p {
-          color : green;
-          font-size : 20px;
-          border : 2px solid slategray;
-          padding : 30px;
-
+    /*css 셀렉터 찾는 방법.
+    /*1번 방법
+      #myspan {
+          color : red;
       }
+    */
+
+    /*2번 방법 span중에 아이디가 #myspan인 놈들
+      span#myspan {
+          color : red;
+      }
+    */
+
+    /*3번 방법 - 그룹으로도 지정가능함.
+      #test > span  {
+          color : red;
+      }
+    */
+
+    #test2 > p:nth-child(2) {color : brown}
+
   </style>
   <link rel="stylesheet" href="css_basic.css">
 </head>
 <body>
   <!--> 패딩, 보더등 배치와 관련된 속성은 상속을 받지 않음 </!-->
 <div>
-  <span>my text is upper!</span>
+  <span id="myspan">my text is upper!</span>
   <ul>
     <li>
-      <span>ny text is dummy</span>
+      <span id="myspan">My text is dummy</span>
       <div>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates itaque dolore modi consequuntur fuga enim reprehenderit reiciendis sed laboriosam voluptatibus quos repellendus, odit nemo sunt, consectetur, distinctio alias. Vitae, aliquid.</p>
       </div>
@@ -26,6 +40,13 @@
     </li>
     <li></li>
   </ul>
+</div>
+<div id ="test2">
+  <h2> 단락 선택</h2>
+  <p>첫 번째</p>
+  <p>두 번째</p>
+  <p>세 번째</p>
+  <p>네 번째</p>
 </div>
 </body>
 </html>

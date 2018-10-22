@@ -1,0 +1,28 @@
+.wrap {
+  position:relative;
+}
+
+.wrap > div {
+  width : 150px;
+  height : 100px;
+  border : 1px solid gray;
+  font-size : 0.7em;
+  text-align :center;
+  line-height: 100px;
+}
+
+.relative {
+  position:relative;
+  left:10px;
+}
+
+.absolute {
+  position : absolute;
+  left : 130px;
+  top:30px;
+}
+
+.fixed {
+  position:fixed;
+  top:250px;
+}
