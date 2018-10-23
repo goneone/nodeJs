@@ -92,4 +92,69 @@ DB를 처리할 때 JDBC를 이용할 경우 사용자가 직접 구현해야 �
 컬럼명이 TARGET DO 안에 정의되어야 쿼리문에 전달이 됨.
 Ex).select cardtype, cardname from T_ISS_POLICY 이 셀렉트문에서 cardtype과 cardname이 target do 안에 정의 되어야 쿼리문에 전달이 됨.
 
-이 부분 다음주 회사가서 저번주에알게되서 공책에 적은 내용 추가 예정 
+이 부분 다음주 회사가서 저번주에알게되서 공책에 적은 내용 추가 예정
+
+
+------------------------------------------------------------------------------
+WAS가 없으면 왜 웹어플리케이션을 실행 할 수 없을까?
+was는 웹어플리케이션(웹 시스템, 웹서비스)을 실행할 수 있는 기초적인 환경을 제공해줌.
+was를 웹에서의 운영체제(os)라고 생각 하자.
+*web에서 사용되어지는 jsp나 servlet 등이 실행 되기 위해서는 was가 필요함
+
+현재 커넥트 프로젝트 was 경로 -
+C:\Users\Tmax\Downloads\apache-tomcat-8.5.34\bin
+쓰는 was 버전 - 8.5.34
+
+포트번호 변경법 -
+C:\Users\Tmax\Downloads\apache-tomcat-8.5.34\conf
+경로에서 server.xml파일에서 8080부분을 원하는 포트번호로 변경.
+자세한건 인터넷 검색
+
+***servlet이란?
+url요청을 처리하는 프로그램이라고 생각하면 된다.
+자바 웹 어플리케이션의 구성요소 중 동적인 처리를 하는 프로그램의 역할
+서블릿을 정의해보면
+*서블릿은 WAS에서 동작하는 java 클래스이다
+서블릿은 HttpServlet을 상속받아야한다.
+서블릿과 jsp로부터 최상의 결과를 얻으려면, 웹 페이지를 개발할 때
+이 두가지를 조화롭게 상요해야 한다.
+ex) 웹 페이지를 구성하는 화면(HTML)은 jsp로 표현하고 복잡한 프로그래밍은 서블릿으로 구현
+
+
+*이클립스는 runtime으로 설정된 was에 밑의 규칙의 url로 servlet을 실행한다
+http://localhost:8080/{프로젝트이름}/{URL Mapping 값}
+
+*웹브라우저가 get메서드 방식으로 요청을 보내면
+servlet의 doGet메서드가 호출된다.
+------------------------------------------------------------------------------
+servlet의 작성방법.
+
+버전에 따라 두가지로 나눠짐.
+3.0에서 사용하는방법
+web.xml파일 사용하지 않음.
+자바 어노테이션을 사용
+3.0 미만에서 사용하는 방법
+servlet을 등록할 때 web.xml파일에 등록
+
+
+
+3.0미만 버전에서 web.xml의 동작 방식.
+<servlet>
+    <description></description>
+    <display-name>TenServlet</display-name>
+    <servlet-name>TenServlet</servlet-name>
+    <servlet-class>exam.TenServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TenServlet</servlet-name>
+    <url-pattern>/ten</url-pattern>
+  </servlet-mapping>
+
+  여기서 url이 /ten 이라고 요청이 들어오면
+  여기서 못찾으면 404페이지를 보여줌.
+  존재하면 servlet-name을 확인함. 이이름을 가지고있으니까
+  <servlet>태그 안에서 똑같은 이름의 servlet 이름을 찾음.
+  TenServlet을 찾아서 실제로 exam.TenServlet을 실행시킴
+  3.0이상 버전에서는 어노테이션이 이런일들을 대신 해줌.
+------------------------------------------------------------------------------
+servlet의 생명 주기
