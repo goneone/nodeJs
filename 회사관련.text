@@ -204,7 +204,8 @@ onCreated는 스크롤을 내리면 테이블을 다시 그리는데 다시그�
 ------------------------------------------------------------------
 po에서 db쿼리에 값 넣을 때 주의 할 점
 
-UPDATE T_ADM_Controller_O SET IP = :IP where Equipseq = :EquipSeq ; 이라는 쿼리가 있다면
+UPDATE T_ADM_Controller_O SET IP = :IP where Equipseq = :EquipSeq ;
+이라는 쿼리가 있다면
 set ip 부분과 where equipseq 부분 값넣는 방법이 다름.
 DLSCSDM003T01DAO.setEquipSeq(doCall14.getEquipSeq());
 tempOutSub2.setIP(bo_arg0_getSub(i).getIP());
