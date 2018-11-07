@@ -69,6 +69,15 @@ body {
   cursor:pointer;
 }
 
+#container ul li a:link {
+  color: white; text-decoration: none;
+}
+#container ul li a:visited {
+  color: white; text-decoration: none;
+}
+#container ul li a:hover {
+  color: white; text-decoration: underline;
+}
 #aboutme-container {
   width:99%;
   margin : 0 auto;
