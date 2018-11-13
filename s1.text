@@ -203,14 +203,22 @@ onCreated는 스크롤을 내리면 테이블을 다시 그리는데 다시그�
 
 ------------------------------------------------------------------
 po에서 db쿼리에 값 넣을 때 주의 할 점
-
+예시1
 UPDATE T_ADM_Controller_O SET IP = :IP where Equipseq = :EquipSeq ;
 이라는 쿼리가 있다면
 set ip 부분과 where equipseq 부분 값넣는 방법이 다름.
-DLSCSDM003T01DAO.setEquipSeq(doCall14.getEquipSeq());
 tempOutSub2.setIP(bo_arg0_getSub(i).getIP());
+set 부분에 넣는건 tempOutSub2(TargetDo)에 값 넣어 줘야하고
+where 조건절에 해당하는 입력 값은 df객체의 set함수()에 셋팅
+DLSCSDM003T01DAO.setEquipSeq(doCall14.getEquipSeq());
 DLSCSDM003T01DAO.update(tempOutSub2, true);
-set 부분에 넣는건 tempOutSub2에 값 넣어 주고 .update 해줘야 함
+
+예시2
+update EMP set temp_val :temp_val where empno =:empno
+set키워드 뒤에오는 값은 TargetDo에 세팅.
+doCall1.setTemp_val(arg0.getTemp_val());
+where 조건절에 해당하는 입력 값은 df객체의 set함수에 세팅
+emptestdof.setEmpno(arg0.getEmpno());
 ------------------------------------------------------------------
 db 테이블에 컬럼 추가 하는 방법
 티베로에서 테이블 오른쪽 눌러서 edit-table 누르고
