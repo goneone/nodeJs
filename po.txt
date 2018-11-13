@@ -1,0 +1,45 @@
+------------------------------------------------------------------------------
+DOF(data object factory)
+데이터베이스에 접근하여 데이터를 조회하거나 조작하는데 사용하는 객체
+DB를 처리할 때 JDBC를 이용할 경우 사용자가 직접 구현해야 했던 여러 가지 반복적인 작업들을 대신해줌으로써
+편리한 개발이 가능하도록 한다.
+***쿼리문과 TARGET DO가 맵핑 되는 원리.
+컬럼명이 TARGET DO 안에 정의되어야 쿼리문에 전달이 됨.
+Ex).select cardtype, cardname from T_ISS_POLICY 이 셀렉트문에서 cardtype과 cardname이 target do 안에 정의 되어야 쿼리문에 전달이 됨.
+
+Select문>
+select *empno, *ename, *deptno from emp where ename LIKE :ename || '%'
+
+Insert문>
+insert into emp
+values (*:empno, *:ename, *:deptno)
+
+Update문>
+update emp set = *:ename where empno = :empno
+
+Delete문>
+delete from emp where empno = :empno
+
+각쿼리의 *친 부분이 Target Do안에 정의되어야 쿼리문에 전달이됨
+대소문자 구분하니 정확한 명칭으로 기입필요
+Where 이하 작성되는 입력값은 Dof 객체내에 자동으로 set/get 메소드가 만들어짐
+
+------------------------------------------------------------------------------
+po에서 db쿼리에 값 넣을 때 주의 할 점
+예시1
+UPDATE T_ADM_Controller_O SET IP = :IP where Equipseq = :EquipSeq ;
+이라는 쿼리가 있다면
+set ip 부분과 where equipseq 부분 값넣는 방법이 다름.
+tempOutSub2.setIP(bo_arg0_getSub(i).getIP());
+set 부분에 넣는건 tempOutSub2(TargetDo)에 값 넣어 줘야하고
+where 조건절에 해당하는 입력 값은 df객체의 set함수()에 셋팅
+DLSCSDM003T01DAO.setEquipSeq(doCall14.getEquipSeq());
+DLSCSDM003T01DAO.update(tempOutSub2, true);
+
+예시2
+update EMP set temp_val :temp_val where empno =:empno
+set키워드 뒤에오는 값은 TargetDo에 세팅.
+doCall1.setTemp_val(arg0.getTemp_val());
+where 조건절에 해당하는 입력 값은 df객체의 set함수에 세팅
+emptestdof.setEmpno(arg0.getEmpno());
+------------------------------------------------------------------------------
