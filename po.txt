@@ -12,7 +12,7 @@ select *empno, *ename, *deptno from emp where ename LIKE :ename || '%'
 
 Insert문>
 insert into emp
-values (*:empno, *:ename, *:deptno)
+values (*:empno, *:ename, *:deptno)  d
 
 Update문>
 update emp set = *:ename where empno = :empno
