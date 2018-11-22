@@ -36,6 +36,28 @@ query는 ibatis queryforObject 호출 부분
 ajax -> ajaxsendport 메소드 ->properties에 정의되어 있다.
 
 소스와 매칭시키면서 UI spec 문서 참조
+
+
+2222222222222222222222222222222222222222222222222222222222
+1.화면에서 오른쪽 클릭후 view frame source
+2.url명에서 SEE_BMD_0020.clt 보기.
+3.이클립스에서 해당 파일명 .xml로 검색
+4.url-mapping url 이부분 보기.
+5.action-class에 맵핑된 액션 찾기.
+6.SEE_BMD_0020HTMLAction
+7.curEvent에 이벤트명 보기.
+8.SeeHouseBlSC 에서 이벤트명 검색
+
+9.(불확실)searchList04 를 찾는 방법.
+10. 거기서 eventResponse에 =bcImpl. 메소드명으로 검색
+11.SeeHouseBLBCImpl 파일나옴.
+12.해당 파일 소스에 매핑된 쿼리문 selectCNTR_LIST 를 검색
+13.BLCmmSQL.xml 파일 나옴..
+
+
+14.SC.java 파일을 보면 bcIMpl. 메소드 호출부있음.
+15.bcimpl은 SeeHouseBLBC 타입.
+16.SeeHouseBLBCIMpl에서 해당 메소드 검색.
 ----------------------------------------------------------------
 개발 순서
 1.**onLoad부터  2.BCComBo부터
