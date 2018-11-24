@@ -75,3 +75,83 @@ event(탭) 별로 나눠서 개발 진행 (save는 나중에)
 토큰을 미리 발행해서 토큰검색 속도를 up
 ----------------------------------------------------------------
 PDC를 도입하는 이유 - 배포중에도 업데이트 가능하도록
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------
+question
+1.searchBLContainerQtyList
+DTO - BLCntrQtyCondDTO (이게 SOINDTO이자 BOInDTO)
+    - BLCntrQtyListDTO (이게 SOOutDTO이자 BOOutDTO)
+    - BLCntrQtyDTO (이게 subDTO)
+    - BLCntrQtyDTO (sub dto면서 targetDO)
+
+DF  - DofOEH0106
+BO  - BoOEH0106
+SO  - SOOEH0101
+
+2.searchSeeSalesInfo (단건?)
+DTO - BLSeeSlsInfoCondDTO (이게 SOINDTO이자 BOInDTO)
+    - BLSeeSlsInfoDTO (이게 SOOutDTO이자 BOOutDTO)
+    - BLSeeSlsInfoDTO (SOOutDTO이자 targetDO)
+DF  - DofOEH0107
+BO  - BoOEH0107
+SO  - SOOEH0107
+
+3.searchOceanRouteDetailList (단건)
+DTO - BLRouteCondDTO (이게 SOINDTO이자 BOInDTO)
+    - BLRouteDTO (이게 SOOutDTO이자 BOOutDTO)
+    - BLRouteDTO (SOOutDTO이자 targetDO)
+DF  - DofOEH0108
+BO  - BoOEH0108
+SO  - SOOEH0108
+
+4.searchBLDimensionList
+DTO - BLDimInfoCondDTO (이게 SOINDTO이자 BOInDTO)
+    - BLDimInfoListDTO (이게 SOOutDTO이자 BOOutDTO)
+    - BLDimInfoDTO (sub dto면서 targetDO)
+DF  - DofOEH0109
+BO  - BoOEH0109
+SO  - SOOEH0109
+
+5.searchBizLineList - 다이나믹 쿼리해결해야함
+DTO - BLBizLineCondDTO (이게 SOINDTO이자 BOInDTO)
+    - BLBizLineListDTO (이게 SOOutDTO이자 BOOutDTO)
+    - BLBizLineDTO (sub dto면서 targetDO)
+DF  - DofOEH0110
+BO  - BoOEH0110
+SO  - SOOEH0110
+
+6.searchQuotationHouseBLInfoList에서
+selectQttnHBLInfo
+DTO - BLQttnHBLInfoCondDTO (이게 SOINDTO이자 BOInDTO)
+    - BLQttnHBLInfoListDTO (이게 SOOutDTO이자 BOOutDTO)
+    - BLQttnHBLInfoDTO (sub dto면서 targetDO)
+DF  - DofOEH0111
+BO  - BoOEH0110
+SO  - SOOEH0110
+
+selectAirQttnHBLInfo

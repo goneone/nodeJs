@@ -43,3 +43,33 @@ doCall1.setTemp_val(arg0.getTemp_val());
 where 조건절에 해당하는 입력 값은 df객체의 set함수에 세팅
 emptestdof.setEmpno(arg0.getEmpno());
 ------------------------------------------------------------------------------
+
+
+PO에서 디버깅
+폴더구조
+bcm
+clt
+fwd
+
+단위테스트 할때 ->
+
+개발 가이드 표준관련
+메시지처리나, 예외처리는 차차 나갈 예정.
+가이드문서에는 내용이 들어가있으나 고객과 협의가 안된 사항이기에 메시지, 다국어처리는 빼고 코딩.
+예외처리는 일단은 ..ㄱ ?
+
+*메타 등록할때 group명 meta는 쓰지말것
+
+git - 한명만 커밋해도
+pull > 작업 > pull(!) > commit and push
+
+Dirty WorkTree : 기존 문제가 되는 파일을 지우고 다시 pull을 받는다.
+
+최초 작업하고 껍데기는 commit
+이 후 소스가 변경될때 마다는 Hot Delpoy
+정말 완성이 되었을 떄에 commit
+
+[master -> master] 커밋 성공 메시지
+[rejected] : 커밋 실패 (pull한 후에 다시 소스를 수정하고 commit)
+
+커밋 이후 > jenkins에 가서 build가 성공 했는지 안했는지 확인.
