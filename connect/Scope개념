@@ -1,0 +1,11 @@
+PageScope = 선언된 그 한페이지 내에서만 사용 할 수 있는 스코프
+RequestScope = 클라이언트가 요청을 보내고 서버가 어떤 일들을 수행하고 응답을 보낼때까지 사용
+할수 있는 스코프가 requestScope.
+서블릿1에서 서블릿2로 보낼때.
+페이지영역은 서블릿1과 서블릿2과 다르나
+requestScope은 같음.
+SessionScope = 세션 객체가 생성되서 소멸될때까지.
+requestscope는 하나의요청이 들어와서 응답이 나갈때까지라면.
+session은 여러개의 요청이들어와도 계속 남아있는 scope가 sessionscope다
+상태유지를 할떄 사용하는 scope가 세션스코프다.
+applicationscope =  어플리케이션이 생성되서 소멸될때까지 유지하고 있는 sessionscope다
