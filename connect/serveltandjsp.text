@@ -1,0 +1,169 @@
+------------------------------------------------------------------------------
+WAS가 없으면 왜 웹어플리케이션을 실행 할 수 없을까?
+was는 웹어플리케이션(웹 시스템, 웹서비스)을 실행할 수 있는 기초적인 환경을 제공해줌.
+was를 웹에서의 운영체제(os)라고 생각 하자.
+*web에서 사용되어지는 jsp나 servlet 등이 실행 되기 위해서는 was가 필요함
+
+현재 커넥트 프로젝트 was 경로 -
+C:\Users\Tmax\Downloads\apache-tomcat-8.5.34\bin
+쓰는 was 버전 - 8.5.34
+
+포트번호 변경법 -
+C:\Users\Tmax\Downloads\apache-tomcat-8.5.34\conf
+경로에서 server.xml파일에서 8080부분을 원하는 포트번호로 변경.
+자세한건 인터넷 검색
+
+***servlet이란?
+url요청을 처리하는 프로그램이라고 생각하면 된다.
+자바 웹 어플리케이션의 구성요소 중 동적인 처리를 하는 프로그램의 역할
+서블릿을 정의해보면
+*서블릿은 WAS에서 동작하는 java 클래스이다
+서블릿은 HttpServlet을 상속받아야한다.
+서블릿과 jsp로부터 최상의 결과를 얻으려면, 웹 페이지를 개발할 때
+이 두가지를 조화롭게 상요해야 한다.
+ex) 웹 페이지를 구성하는 화면(HTML)은 jsp로 표현하고 복잡한 프로그래밍은 서블릿으로 구현
+
+
+*이클립스는 runtime으로 설정된 was에 밑의 규칙의 url로 servlet을 실행한다
+http://localhost:8080/{프로젝트이름}/{URL Mapping 값}
+
+*웹브라우저가 get메서드 방식으로 요청을 보내면
+servlet의 doGet메서드가 호출된다.
+------------------------------------------------------------------------------
+servlet의 작성방법.
+
+버전에 따라 두가지로 나눠짐.
+3.0에서 사용하는방법
+web.xml파일 사용하지 않음.
+자바 어노테이션을 사용
+3.0 미만에서 사용하는 방법
+servlet을 등록할 때 web.xml파일에 등록
+
+
+
+3.0미만 버전에서 web.xml의 동작 방식.
+<servlet>
+    <description></description>
+    <display-name>TenServlet</display-name>
+    <servlet-name>TenServlet</servlet-name>
+    <servlet-class>exam.TenServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TenServlet</servlet-name>
+    <url-pattern>/ten</url-pattern>
+  </servlet-mapping>
+
+  여기서 url이 /ten 이라고 요청이 들어오면
+  여기서 못찾으면 404페이지를 보여줌.
+  존재하면 servlet-name을 확인함. 이이름을 가지고있으니까
+  <servlet>태그 안에서 똑같은 이름의 servlet 이름을 찾음.
+  TenServlet을 찾아서 실제로 exam.TenServlet을 실행시킴
+  3.0이상 버전에서는 어노테이션이 이런일들을 대신 해줌.
+------------------------------------------------------------------------------
+servlet의 생명 주기
+WAS는 서블릿 요청을 받으면 해당 서블릿이 메모리에 있는지 확인한다.
+IF(메모리에 없음) {
+  해당 서블릿 클래스를 메모리에 올림
+  init() 메소드를 실행.
+}
+  service() 메소드를 실행
+was가 종료되거나, 웹 어플리케이션이 새롭게 갱신될 경우 destroy() 메소드가 실행된다.
+
+public LifecycleServlet() {
+        System.out.println("LifecycleServlet 생성!!");
+    }
+
+public void init(ServletConfig config) throws ServletException {
+	System.out.println("init 호출!!");
+}
+
+()요청된 객체가 메모리에 없으면 메모리에 올림.
+메모리에 올라간 후에는
+메모리에 있으면 service라는 메소드만 호출함.
+
+서블릿이 수정되면. 메모리에 올라가있는 서블릿 객체는 사용 될수 없을 것이다
+그 때 destroy 메소드가 호출됨.
+그리고 브라우저에서 호출해보면
+다시 객체를 생성하고 init 호출하고 service 호출함.)
+------------------------------------------------------------------------------
+service() 메소드는 어떻게 동작하나?
+service(request, response) 메소드
+HttpServlet에 이미 servlet 메소드가 이미 구현이 되어 있는 상태
+내가 만든 클래스가 service라는 메소드가 가지고 있지 않다면
+부모 클래스의 service가 실행될것이다 (상속~)
+
+HttpServlet 서블릿에서 service메소드가 없는데도 실행이 되는 이유
+이클립스에서 HelloServlet 서블릿을 보면
+public class HelloServlet extends HttpServlet {
+HttpServlet을 상속 받았고 따로 service 메소드를 오버라이딩 하지 않았기 때문에
+HttpServlet의 service() 메서드가 실행이 되는 것이다.
+------------------------------------------------------------------------------
+HttpServletRequest 와 HttpServletResponse
+클라이언트로부터 요청이 들어오면 WAS는 HttpServletRequest 와 HttpServletResponse 객체를 생성한다.
+------------------------------------------------------------------------------
+jsp 페이지에서는 선언문, 스크립트릿, 표현식 이라는 3가지의 스크립트 요소를 제공한다.
+선언문      <%! %>  - 전역변수 선언 및 메소드 선언에 사용
+스크립트릿  <% %>   - 프로그램 코드 기술에 사용
+표현식      <%=%>   - 화면에 출력할 내용 기술에 사용
+
+**모든 jsp는 서블릿으로 바뀌어서 동작함~~~!
+<% 이런 기호는 서블릿으로 바뀔떄 어떻게 바뀌어야하는지 컴퓨터한테 알려주는 거라고 생각하면 됨.
+<% page <--는 page 지시자. 뭐 language="java" contentType ="text/html"이고~ 이런거를 알려줌
+지시는 누가듣냐? jsp를 실행하는 was~~!
+
+<%
+	int total = 0;
+	for(int i= 0 ; i < 10; i++) {
+	 	total = total + i;
+	}
+%>
+이러면 자바코드를 실행 할 수 있음
+<% %> 요안에 넣으면 됨
+
+<%= %>
+이거는 표현식이라고함.
+응답결과에 넣고 싶은 자바코드를 넣어주면됨.
+<%=total %> 이런식으로~!
+
+**톰캣이 jsp를 서블릿으로 바꾼다
+------------------------------------------------------------------------------
+.jsp 파일이 실행될때 벌어지는 일
+이클립스 워크스페이스 아래의 .metadata 폴더에 .java 파일이 생성된다.
+해당 파일의 _jspService() 메소드 안에 만들었던 코드들이 변환되서 들어간 것을 확인할수 있다
+.java는 서블릿 소스로 자동으로 컴파일 되면서 실행되서 그 결과가 브라우저에 보여진다
+redirect는 클라이언트가 서버에게 요청을 보내고 그거를 다시 클라이언트에게 새로 요청할 곳을 알려주면서
+------------------------------------------------------------------------------
+이걸로 다시요청해요라고 주는 것이 리다이렉트다. 그래서 실행후 url주소가 바뀜.
+그런데 forward는 클라이언트가 요청을 보내면 서버쪽에서 그요청을 혼자처리하는게아니라 다른 다른 servlet에게
+맡기는 걸 forward라함 그래서 forward가 실행된뒤에는 url이 바뀌지않음 **
+
+forward와 redirect의 가장큰 차이점은 요청이 하나인지, 요청이 서로다른 두개인지. 확인해야함 ***
+
+forward는 요청이들어와서 서버가 옮겨 줬을 뿐. 새로운 요청이 들어온것은 아니다.
+그렇기떄문에 클라이언트가 요청했을때 만들었던 요청,응답 객체가 그대로 유지 될것이다.
+
+forward
+1.웹 브라우저에서 server1에게 요청을 보냄
+2.servlet1은 요청을 처리한 후, ***그 결과를 HttpServletRequest에 저장.
+3.servelt1은 결과가 저장된 HttpServletRequest와 응답을 위한 httpservletresponse를 같은 웹 어플리케이션 안에
+있는 servelt2에게 전송.
+4. servlet2는 요청을 처리후 웹 브라우저에게 결과를 전송
+------------------------------------------------------------------------------
+jstl
+프론트엔드 개발자들은 태그에 익숙하니까.. 태그형식으로 처리할수 있도록
+jstl의 코어태그 c -> <c:set var="varName" scope="session" value="someValue" />
+var = 변수명
+scope = 변수값이 저장될 영역(page, request, session, application)
+value = 변수 값
+
+변수 지원태그를 이용해서 프로퍼티나 맵의처리를 할 수 있다
+**자바언어를 공부할 때 객체의 프로퍼티라는 용어가 나오면 객체의 값을 변경하거나 읽어들이기 위한 겟터셋터 메소드를 생각하면됨~!
+
+
+코어태그: 변수 지원 태그 -프로퍼티 맵의 처리
+<c:set target="${some}" property="propertyName" value="anyValue" />
+위의 코드는 한마디로. some이라는 객체가 가진 setPropertyName에다가 anyValue 값을 넣어주세요~하는 거랑 똑같음.
+some 객체가 자바빈일 경우 :
+
+------------------------------------------------------------------------------
+자바빈이란?
