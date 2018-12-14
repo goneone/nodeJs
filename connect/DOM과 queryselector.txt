@@ -1,0 +1,22 @@
+브라우저는 DOM Tree를 찾고 조작하는걸 쉽게 도와주는 여러가지 메서드
+(DOM API)를 제공한다.
+예를 들어
+getElementById()이런 메서드가 있다.
+
+h1.getElementById() --> h1태그에서 id를 찾겠다!
+document.getElementById("nav-cart-count").innerText = "있어";
+이런식으로~
+
+
+
+
+
+getElementById()
+ID 정보를 통해서 찾음
+
+Element.querySelector()
+DOM을 찾는데 특히 유용한 querySelector 메서드
+CSS 스타일을 결정할 때 사용하던, Selector 문법을 활용해 DOM에 접근가능
+
+css selector
+selector문법은 querySelector와 querySelectorAll메서드에서 사용할 수 있음.
