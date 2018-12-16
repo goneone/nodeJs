@@ -1,0 +1,5 @@
+ajax - 비동기로 서버에서 데이터를 가져오는 것
+
+Ajax 코드
+
+Ajax를 보내기위해서는 XMLHttpRequest() 객체를 만들어야함.

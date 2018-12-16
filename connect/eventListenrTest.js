@@ -5,3 +5,16 @@ el.addEventListener("click", function(evt){
  console.log(evt.target);
  console.log(evt.target.nodeName);
 }, false);
+
+
+function random(number) {
+  return Math.floor(Math.random()*(number+1));
+}
+
+
+
+var button = document.querySelector('button');
+button.onclick = function() {
+  var rndCol = 'rgb(' + random(255) + ',' + random(255) + ',' + random(255) + ')';
+  document.body.style.backgroundColor = rndCol;
+}
