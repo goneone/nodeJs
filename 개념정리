@@ -218,3 +218,95 @@ JVM도 워드프로세스, 인터넷,  멜론 등과 같이 하나의 프로세�
 워드치다보면 자동으로 맞춤법 검사 하는데. 그러한 프로세스 내의 여러 개의 흐름.
 그것을 쓰레드라 한다.
 ------------------------------------------------------------------------------
+Class Loader란?
+Class Loader는 자바 바이트코드를 읽어들여서 클래스 객체를 생성하는 역할을 담당
+
+자바는 동적으로 클래스를 읽는다. 런타임 시에 모든 코드가 JVM에 링크, 로딩되는 것이다. 자바의 런타임 라이브러리인 rt.jar도 마찬가지다.
+이러한 동적인 클래스 로딩을 담당하는 것이 Class Loader이며, 자바는 기본적으로 java.lang.ClassLoader라는 Class Loader를 제공한다.
+역으로 동적으로 클래스를 로딩한다는 것은 JVM은 클래스에 대한 정보(메소드, 필드, 상속관계)를 가지고 있지 않다는 것을 의미한다.
+이러한 정보 역시 동적으로 확인되며 검증한다.
+
+------------------------------------------------------------------------------
+클래스 로딩 방식
+클래스 로딩 방식에는 load-time dynamic loading과 run-time dynamic loading이 있다.
+load-time dynamic loading은 클래스를 로딩하는 과정에서 다시 필요한 클래스를 로딩한다.
+예를 들어 HelloWorld 클래스 내에 System.out.println이 있다면 java.lang.System을 로딩할 것이다.
+반면 run-time dynamic loading은 클래스 내 코드를 실행하는 과정에서 필요한 클래스를 로딩한다. Class.forName()을 사용하는 경우가 대표적이다.
+
+------------------------------------------------------------------------------
+동적인 클래스 로딩
+자바는 동적으로 클래스를 읽어온다.
+즉, 런타임에 모든 코드가 JVM에 링크된다.
+모든 클래스는 그 클래스가 참조되는 순간에 동적으로 JVM에 링크되며, 메모리에 로딩된다. 자바의 런타임 라이브러리([JDK 설치 디렉토리]/jre/lib/rt.jar) 역시 예외가 아니다. 이러한 동적인 클래스 로딩은 자바의 클래스로더 시스템을 통해서 이루어지며, 자바가 기본적으로 제공하는 클래스로더는 java.lang.ClassLoader를 통해서 표현된다. JVM이 시작되면, 부트스트랩(bootstrap) 클래스로더를 생성하고, 그 다음에 가장 첫번째 클래스인 Object를 시스템에 읽어온다.
+
+런타임에 동적으로 클래스를 로딩하다는 것은 JVM이 클래스에 대한 정보를 갖고 있지 않다는 것을 의미한다. 즉, JVM은 클래스의 메소드, 필드, 상속관계 등에 대한 정보를 알지 못한다. 따라서, 클래스로더는 클래스를 로딩할 때 필요한 정보를 구하고, 그 클래스가 올바른지를 검사할 수 있어야 한다. 만약 이것을 할 수 없다면, JVM은 .class 파일의 버전이 일치하지 않을 수 있으며, 또한 타입 검사를 하는 것이 불가능할 것이다. JVM은 내부적으로 클래스를 분석할 수 있는 기능을 갖고 있으며, JDK 1.1부터는 개발자들이 리플렉션(Reflection)을 통해서 이러한 클래스의 분석을 할 수 있도록 하고 있다.
+
+
+
+
+클래스 로딩의 순서는?
+1. Bootstrap Class Loader는 JVM이 초기화 시 필요한 클래스(jre/lib/rt.jar 등)를 로딩한다.
+2. Extension Class Loader는 $JAVA_HOME/jre/lib/ext내 클래스를 로딩한다. (Bootstrap과 Extension을 묶어 Bootstrap으로 표현하는 경우도 있다)
+3. System Class Loader는 애플리케이션이 사용하는 클래스를 로딩한다.
+여기까지는 일반적인 자바 애플리케이션의 클래스 로딩이다.
+만약 웹로직과 같은 애플리케이션 서버를 사용하는 경우 ServletContainerClassLoader나 ServletContextClassLoader 등이 추가로 존재하게 된다.
+자바 스펙에 의해 Class Loader는 다음 조건을 충족해야 한다.
+1. WEB-INF/lib보다 WEB-INF/classes를 먼저 로딩해야 한다. (의무사항)
+2. war 파일 내부의 클래스를 컨테이너 레벨의 jar 파일보다 먼저 로딩한다. (권고사항)
+
+-------
+
+  개발을 하거나 WAS를 기동하면 ClassNotFoundException 을 많이 만나게 됩니다.
+
+
+왜 클래스를 찾을 수 없는지 원리를 알아보기 위해 정리를 해보았습니다.
+
+
+ClassLoader의 작동원리를 살펴보기 전에 먼저 알아야 할 용어를 정리하면.
+
+
+Class - Java 프로그램을 컴파일하여 생성된 .class
+
+Class 객체 - 일반객체를 만들기 위해 JVM 메모리에 로드된 .class에 대한 객체
+
+일반 객체 - Class 객체로 생성한 객체
+
+
+ClassLoader는 작성한 Java Byte Code를 JVM메모리상에 올려주는 역할을 하는 것이고, 프로그래머는 Class 객체를 이용하여 일반객체를 생성할 수 있습니다. 즉 메모리 내에서 Class 객체를 매개로 하여 일반객체를 생성합니다.
+
+
+ClassLoader는 기본적으로 Unload 기능을 제공하지 않습니다.. GC에 의하여 자동 Unload되며, Static으로 선언된 경우에는 GC에서 Unload하지 않기 때문에 프로그래머는 항상 Static으로 선언된 클래스를 사용할 수 있습니다.
+
+
+
+
+
+Java ClassLoader의 구조(Delegation Model, 위임구조)
+
+
+Bootstrap ClassLoader - 모든 ClassLoader의 부모 ClassLoader
+
+Extensions ClassLoader - Bootstrap ClassLoader를 상속하며, lib/ext 디렉토리에 있는 클래스를 로드
+
+System-Classpath ClassLoader - Extensions ClassLoader를 상속하며, CLASSPATH에 잡혀 있는 모든 클래스, java.class.path 시스템 프라퍼티, -cp 혹은 -classpath에 잡혀 있는 모든 클래스를 로드
+
+
+ps.구조도는 첨부하였습니다.
+
+
+
+클래스 로더의 delegation model에서 클래스를 찾을 경우
+
+Cache -> Parent -> Self 순서로 찾습니다.
+
+
+클래스 생성을 요청받으면 먼저 Cache를 검색하여 이전에 요청이 있었는지 파악하며, 없을경우 상위 클래스 로더에서 찾습니다.
+
+최상위 클래스로더인 Bootstrap ClassLoader 에도 없을 경우 작업한 소스의 경로에서 클래스를 찾아서 생성합니다.
+
+출처: http://unabated.tistory.com/entry/JVM-ClassLoader의-작동원리 [랄라라]
+
+
+
+
+클래스로더 - compile time이 아닌 run time에 class를 로딩할 수 있게 해주는 기술
