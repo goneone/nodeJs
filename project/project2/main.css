@@ -1,0 +1,60 @@
+#cardList {
+  margin-left:  50px;
+}
+
+#cardList div ul {
+  padding-left: 20px;
+}
+
+#cardList div ul li:first-child {
+  font-size: 20px;
+  list-style:none;
+  background-color: navy;
+  color : white;
+  height:30px;
+  padding: 20px;
+}
+#cardList div {
+  float:left;
+  width:370px;
+
+  margin-right: 10px;
+}
+#menubar ul li a:link {
+  color: white; text-decoration: none;
+}
+#menubar ul li a:visited {
+  color: white; text-decoration: none;
+}
+#menubar ul li a:hover {
+  color: white; text-decoration: underline;
+}
+#menubar {
+  width:99%;
+  margin : 0 auto;
+  margin-top : 10px;
+  background-color: white;
+  height : 80px;
+}
+#menubar ul {
+  float: right;
+}
+#menubar ul li {
+  display: inline-block;
+  padding : 10px;
+  color : blue;
+  width : 150px;
+  height : 20px;
+  text-align: center;
+  border-style: 1px solid skyblue;
+  background-color: skyblue;
+  font : Dotum;
+  margin-left : 10px;
+  !-box-shadow: 1px -1px 5px 0px skyblue;
+  cursor:pointer;
+
+}
+
+#menubar ul li:last-child {
+  margin-right: 10px;
+}
