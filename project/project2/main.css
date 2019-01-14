@@ -58,3 +58,38 @@
 #menubar ul li:last-child {
   margin-right: 10px;
 }
+
+#registerTodolist_Title {
+  text-align: center;
+  font-size: 25px;
+  margin-top: 30px;
+}
+
+#registerTodolist_contents{
+  padding-right: 400px;
+}
+#registerTodolist_contents ul li {
+  list-style:none;
+}
+
+#registerTodolist_contents ul li input {
+  padding-left: 10px;
+  height: 27px;
+  border-style: 1px solid black;
+
+}
+#submitButton {
+  background-color: skyblue;
+  border-width: 0px;
+  height: 30px;
+  width: 100px;
+  color: white;
+}
+
+#deleteButton {
+  background-color: skyblue;
+  border-width: 0px;
+  height: 30px;
+  width: 100px;
+  color: white;
+}

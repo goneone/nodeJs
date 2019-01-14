@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="main.css">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Oswald" rel="stylesheet">
+<title>Document</title>
+</head>
+<body>
+<header>
+  <div id="registerTodolist_Title">할일 등록</div>
+</header>
+
+<div id ="registerTodolist_contents">
+  어떤일인가요?
+  <ul>
+    <li>
+      <input type="text" name="todo" value="swift 공부하기(24자까지)" maxlength="24" size="50">
+    </li>
+  </ul>
+  누가 할일인가요?
+  <ul>
+    <li>
+      <input type="text" name="name" value="홍길동">
+    </li>
+  </ul>
+  우선순위를 선택하세요
+  <ul>
+    <li>
+      <label><input type="radio" name="first" value="first">1순위</label>
+      <label><input type="radio" name="second" value="second">2순위</label>
+      <label><input type="radio" name="third" value="third">3순위</label>
+    </li>
+  </ul>
+</div>
+
+<footer id = "buttons">
+
+    <button type="button" name="previousButton"><이전</button>
+    <button type="button" id="submitButton" name="submit">제출</button>
+    <button type="button" id="deleteButton" name="delete">내용지우기</button>
+
+</footer>
+</body>
+</html>
