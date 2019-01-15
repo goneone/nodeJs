@@ -1,2 +1,7 @@
 1.포트 보는 법
 SHOW GLOBAL VARIABLES LIKE 'PORT';
+
+2.
+show databases;
+use 테이블명;
+show tables;
