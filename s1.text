@@ -178,9 +178,6 @@ wsMessage – 화면명 맞는지 확인하고 맞으면  |(파이프라인) 기
 
 *대용량 테이블에 쌓는 이유  - 특정 다른 서버에서 데이터를 읽어서 뭔가를 처리함.
 ------------------------------------------------------------------
-권한관련 문제 해결방법 (UI화면에서 사용자권한이 없습니다 라고 뜰 떄 )
--PL님이 올려주신 내용참조
-------------------------------------------------------------------
 상용 DB(?)에 반영할 때
 공유 - 3000.구축 – 01.DB관련가이드 – 용어신청_테이블 변경요청서에다가
 변경된거 반영해달라고 쓰고. DBA분한테 말씀드리기
@@ -220,6 +217,7 @@ UPDATE T_ADM_Controller_O SET IP = :IP where Equipseq = :EquipSeq ;
 set ip 부분과 where equipseq 부분 값넣는 방법이 다름.
 tempOutSub2.setIP(bo_arg0_getSub(i).getIP());
 set 부분에 넣는건 tempOutSub2(TargetDo)에 값 넣어 줘야하고
+
 where 조건절에 해당하는 입력 값은 df객체의 set함수()에 셋팅
 DLSCSDM003T01DAO.setEquipSeq(doCall14.getEquipSeq());
 DLSCSDM003T01DAO.update(tempOutSub2, true);
