@@ -21,6 +21,6 @@
   "homepage": "https://github.com/goneone/nodeJs#readme",
   "dependencies": {
     "node-mysql": "^0.4.2",
-    "sanitize-html": "^1.18.2"
+    "sanitize-html": "^2.3.2"
   }
 }
